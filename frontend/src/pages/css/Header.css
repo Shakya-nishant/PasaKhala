@@ -1,0 +1,248 @@
+/* ============================================================
+   Header.css — PasaKhala Cultural Organization
+   Aesthetic: Warm terracotta + deep crimson, Nepali cultural
+   ============================================================ */
+
+@import url("https://fonts.googleapis.com/css2?family=Tiro+Devanagari+Hindi:ital@0;1&family=Playfair+Display:wght@600;800&family=Lato:wght@400;700&display=swap");
+
+:root {
+  --pk-crimson:    #8B1A1A;
+  --pk-gold:       #C9922A;
+  --pk-terracotta: #C4622D;
+  --pk-cream:      #FDF6EC;
+  --pk-dark:       #1C1005;
+  --pk-nav-bg:     #6B1010;
+  --pk-nav-hover:  #C9922A;
+  --pk-border:     #D4A853;
+}
+
+/* ── Brand Bar ────────────────────────────────────────────── */
+.header {
+  background: linear-gradient(135deg, var(--pk-cream) 0%, #F7E8CC 100%);
+  border-bottom: 4px solid var(--pk-gold);
+  box-shadow: 0 4px 16px rgba(139, 26, 26, 0.12);
+  font-family: "Lato", sans-serif;
+}
+
+.header__brand {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  padding: 18px 48px 14px;
+  position: relative;
+}
+
+.header__logo-wrap {
+  flex-shrink: 0;
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  border: 3px solid var(--pk-gold);
+  overflow: hidden;
+  box-shadow: 0 0 0 5px rgba(201, 146, 42, 0.2);
+}
+
+.header__logo {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.header__identity {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.header__orgname {
+  font-family: "Tiro Devanagari Hindi", serif;
+  font-size: 2.4rem;
+  font-weight: 700;
+  color: var(--pk-crimson);
+  margin: 0;
+  line-height: 1;
+  letter-spacing: 1px;
+  text-shadow: 1px 1px 0 rgba(201, 146, 42, 0.25);
+}
+
+.header__slogan {
+  font-family: "Tiro Devanagari Hindi", serif;
+  font-size: 1rem;
+  color: var(--pk-terracotta);
+  margin: 0;
+  letter-spacing: 0.5px;
+  font-style: italic;
+}
+
+/* Decorative element on the right */
+.header__deco {
+  position: absolute;
+  right: 48px;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--pk-gold);
+  font-size: 1.2rem;
+  opacity: 0.6;
+}
+
+.header__deco-line {
+  display: inline-block;
+  width: 60px;
+  height: 1.5px;
+  background: var(--pk-gold);
+}
+
+/* ── Navigation ───────────────────────────────────────────── */
+.navbar {
+  background: linear-gradient(90deg, var(--pk-nav-bg) 0%, #9B1F1F 100%);
+  padding: 0 32px;
+  display: flex;
+  align-items: center;
+  box-shadow: 0 3px 10px rgba(107, 16, 16, 0.4);
+  position: relative;
+  z-index: 100;
+}
+
+.navbar__list {
+  display: flex;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  gap: 0;
+  width: 100%;
+}
+
+.navbar__item {
+  position: relative;
+}
+
+.navbar__link {
+  display: block;
+  padding: 14px 20px;
+  color: #F7E8CC;
+  text-decoration: none;
+  font-family: "Lato", sans-serif;
+  font-size: 0.88rem;
+  font-weight: 700;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+  transition: color 0.25s, background 0.25s;
+  position: relative;
+}
+
+.navbar__link::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 0;
+  height: 3px;
+  background: var(--pk-gold);
+  border-radius: 2px 2px 0 0;
+  transition: width 0.3s ease;
+}
+
+.navbar__link:hover,
+.navbar__link--active {
+  color: var(--pk-gold);
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.navbar__link:hover::after,
+.navbar__link--active::after {
+  width: 70%;
+}
+
+/* ── Hamburger (mobile) ───────────────────────────────────── */
+.navbar__hamburger {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 12px 4px;
+  margin-left: auto;
+}
+
+.navbar__hamburger span {
+  display: block;
+  width: 26px;
+  height: 2.5px;
+  background: var(--pk-cream);
+  border-radius: 2px;
+  transition: transform 0.3s, opacity 0.3s;
+}
+
+.navbar__hamburger.open span:nth-child(1) {
+  transform: translateY(7.5px) rotate(45deg);
+}
+.navbar__hamburger.open span:nth-child(2) {
+  opacity: 0;
+}
+.navbar__hamburger.open span:nth-child(3) {
+  transform: translateY(-7.5px) rotate(-45deg);
+}
+
+/* ── Responsive ───────────────────────────────────────────── */
+@media (max-width: 900px) {
+  .header__brand {
+    padding: 14px 24px;
+  }
+
+  .header__orgname {
+    font-size: 1.8rem;
+  }
+
+  .header__deco {
+    display: none;
+  }
+
+  .navbar {
+    padding: 0 16px;
+    flex-wrap: wrap;
+  }
+
+  .navbar__hamburger {
+    display: flex;
+  }
+
+  .navbar__list {
+    display: none;
+    flex-direction: column;
+    width: 100%;
+    padding: 8px 0 16px;
+  }
+
+  .navbar__list--open {
+    display: flex;
+  }
+
+  .navbar__link {
+    padding: 12px 16px;
+    font-size: 0.95rem;
+  }
+
+  .navbar__link::after {
+    display: none;
+  }
+}
+
+@media (max-width: 480px) {
+  .header__logo-wrap {
+    width: 60px;
+    height: 60px;
+  }
+
+  .header__orgname {
+    font-size: 1.5rem;
+  }
+
+  .header__slogan {
+    font-size: 0.85rem;
+  }
+}

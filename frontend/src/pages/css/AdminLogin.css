@@ -1,0 +1,199 @@
+/* ============================================================
+   AdminLogin.css — PasaKhala Admin Login
+   ============================================================ */
+@import url("https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;800&family=Lato:wght@400;700&display=swap");
+
+.admin-login {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #1C1005 0%, #2E1200 60%, #4A1800 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 48px 24px;
+  font-family: "Lato", sans-serif;
+}
+
+.admin-login__card {
+  background: #FDF6EC;
+  border-radius: 12px;
+  padding: 48px 40px;
+  width: 100%;
+  max-width: 440px;
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.55);
+  border-top: 5px solid #8B1A1A;
+}
+
+.admin-login__badge {
+  display: inline-block;
+  background: rgba(139, 26, 26, 0.1);
+  color: #8B1A1A;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  padding: 6px 14px;
+  border-radius: 20px;
+  margin-bottom: 16px;
+}
+
+.admin-login__title {
+  font-family: "Playfair Display", serif;
+  font-size: 2rem;
+  font-weight: 800;
+  color: #8B1A1A;
+  margin: 0 0 10px;
+}
+
+.admin-login__sub {
+  font-size: 0.88rem;
+  color: #7A6050;
+  line-height: 1.6;
+  margin: 0 0 28px;
+}
+
+.admin-login__alert {
+  background: rgba(139, 26, 26, 0.08);
+  border: 1px solid rgba(139, 26, 26, 0.3);
+  color: #8B1A1A;
+  border-radius: 6px;
+  padding: 10px 14px;
+  font-size: 0.88rem;
+  margin-bottom: 20px;
+}
+
+/* ── Form ──────────────────────────────────────────────────── */
+.admin-login__form {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.form-group label {
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: #3A2010;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+}
+
+.form-group input {
+  width: 100%;
+  padding: 12px 14px;
+  border: 1.5px solid rgba(201, 146, 42, 0.3);
+  border-radius: 6px;
+  font-family: "Lato", sans-serif;
+  font-size: 0.95rem;
+  color: #3A2010;
+  background: #fff;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  outline: none;
+  box-sizing: border-box;
+}
+
+.form-group input:focus {
+  border-color: #C9922A;
+  box-shadow: 0 0 0 3px rgba(201, 146, 42, 0.15);
+}
+
+.form-group input::placeholder { color: #B0A090; }
+
+/* Password show/hide wrapper */
+.input-wrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.input-wrap input {
+  padding-right: 68px;
+}
+
+.toggle-pass {
+  position: absolute;
+  right: 12px;
+  background: none;
+  border: none;
+  color: #9A8070;
+  font-size: 0.78rem;
+  font-weight: 700;
+  cursor: pointer;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  font-family: "Lato", sans-serif;
+}
+
+.toggle-pass:hover { color: #8B1A1A; }
+
+/* ── Submit ────────────────────────────────────────────────── */
+.admin-login__submit {
+  margin-top: 8px;
+  padding: 14px;
+  background: #8B1A1A;
+  color: #FDF6EC;
+  border: none;
+  border-radius: 6px;
+  font-family: "Lato", sans-serif;
+  font-size: 0.9rem;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.2s;
+  width: 100%;
+}
+
+.admin-login__submit:hover:not(:disabled) {
+  background: #6B1010;
+  transform: translateY(-1px);
+}
+
+.admin-login__submit:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* ── Footer links ──────────────────────────────────────────── */
+.admin-login__footer-links {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 24px;
+  font-size: 0.85rem;
+  color: #9A8070;
+}
+
+.admin-login__link {
+  color: #8B1A1A;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.admin-login__link:hover { text-decoration: underline; }
+
+.admin-login__back {
+  display: block;
+  margin-top: 14px;
+  background: none;
+  border: none;
+  color: #C0B0A0;
+  font-size: 0.85rem;
+  cursor: pointer;
+  font-family: "Lato", sans-serif;
+  transition: color 0.2s;
+  padding: 0;
+  text-align: center;
+  width: 100%;
+}
+
+.admin-login__back:hover { color: #8B1A1A; }
+
+@media (max-width: 480px) {
+  .admin-login__card { padding: 32px 24px; }
+}
