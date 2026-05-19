@@ -1,4 +1,5 @@
 const { Album, Memory } = require("../models/Album");
+const { sseEmit } = require("../routes/sseRoutes");
 
 /* ═══════════════════════════════════════════════════════════════
    ALBUMS
@@ -25,6 +26,7 @@ const createAlbum = async (req, res) => {
       description: (description || "").trim(),
       order: await Album.countDocuments(),
     });
+    sseEmit("albums");
     res.status(201).json({ message: "Album created.", album });
   } catch (err) {
     res.status(500).json({ message: "Server error: " + err.message });
@@ -41,6 +43,7 @@ const updateAlbum = async (req, res) => {
       { new: true, runValidators: true }
     );
     if (!album) return res.status(404).json({ message: "Album not found." });
+    sseEmit("albums");
     res.json({ message: "Album updated.", album });
   } catch (err) {
     res.status(500).json({ message: "Server error: " + err.message });
@@ -52,6 +55,7 @@ const deleteAlbum = async (req, res) => {
   try {
     const album = await Album.findByIdAndDelete(req.params.id);
     if (!album) return res.status(404).json({ message: "Album not found." });
+    sseEmit("albums");
     res.json({ message: "Album deleted." });
   } catch (err) {
     res.status(500).json({ message: "Server error: " + err.message });
@@ -83,6 +87,7 @@ const addImagesToAlbum = async (req, res) => {
     await album.save();
 
     const skipped = images.length - toAdd.length;
+    sseEmit("albums");
     res.json({
       message: skipped
         ? `${toAdd.length} image${toAdd.length !== 1 ? "s" : ""} added. ${skipped} skipped — album limit of ${MAX_ALBUM_IMAGES} reached.`
@@ -110,6 +115,7 @@ const removeImageFromAlbum = async (req, res) => {
     // Reset coverIndex if it's now out of range
     if (album.coverIndex >= album.images.length) album.coverIndex = 0;
     await album.save();
+    sseEmit("albums");
     res.json({ message: "Image removed.", album });
   } catch (err) {
     res.status(500).json({ message: "Server error: " + err.message });
@@ -143,6 +149,7 @@ const addMemories = async (req, res) => {
       order: count + i,
     }));
     const created = await Memory.insertMany(docs);
+    sseEmit("albums");
     res.status(201).json({ message: "Memories added.", memories: created });
   } catch (err) {
     res.status(500).json({ message: "Server error: " + err.message });
@@ -154,6 +161,7 @@ const deleteMemory = async (req, res) => {
   try {
     const mem = await Memory.findByIdAndDelete(req.params.id);
     if (!mem) return res.status(404).json({ message: "Memory not found." });
+    sseEmit("albums");
     res.json({ message: "Memory deleted." });
   } catch (err) {
     res.status(500).json({ message: "Server error: " + err.message });

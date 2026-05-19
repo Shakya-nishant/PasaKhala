@@ -1,5 +1,6 @@
 const Member = require("../models/Member");
 const Settings = require("../models/Settings");
+const { sseEmit } = require("../routes/sseRoutes");
 
 // ── Helper: get or create settings ────────────────────────────
 const getSettings = async () => {
@@ -48,6 +49,7 @@ const createMember = async (req, res) => {
     }
 
     const member = await Member.create({ name, title, image: image || "", column, order: order || 0 });
+    sseEmit("members");
     res.status(201).json({ message: "Member created.", member });
   } catch (err) {
     res.status(500).json({ message: "Server error: " + err.message });
@@ -85,6 +87,7 @@ const updateMember = async (req, res) => {
       { new: true, runValidators: true }
     );
     if (!member) return res.status(404).json({ message: "Member not found." });
+    sseEmit("members");
     res.json({ message: "Member updated.", member });
   } catch (err) {
     res.status(500).json({ message: "Server error: " + err.message });
@@ -97,6 +100,7 @@ const deleteMember = async (req, res) => {
   try {
     const member = await Member.findByIdAndDelete(req.params.id);
     if (!member) return res.status(404).json({ message: "Member not found." });
+    sseEmit("members");
     res.json({ message: "Member deleted." });
   } catch (err) {
     res.status(500).json({ message: "Server error: " + err.message });
@@ -127,6 +131,7 @@ const updateColumnsSettings = async (req, res) => {
       { new: true, upsert: true }
     );
     res.json({ message: "Settings updated.", totalColumns: settings.totalColumns });
+    sseEmit("members");
   } catch (err) {
     res.status(500).json({ message: "Server error: " + err.message });
   }

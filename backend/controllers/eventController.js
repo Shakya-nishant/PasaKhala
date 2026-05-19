@@ -1,4 +1,5 @@
 const Event = require("../models/Event");
+const { sseEmit } = require("../routes/sseRoutes");
 
 /* ─────────────────────────────────────────────────────────────
    PUBLIC — only future/ongoing events, soonest first
@@ -49,6 +50,7 @@ const createEvent = async (req, res) => {
       eventDate:   date,
       image:       image || "",
     });
+    sseEmit("events");
     res.status(201).json({ message: "Event created.", event });
   } catch (err) {
     res.status(500).json({ message: "Server error: " + err.message });
@@ -81,6 +83,7 @@ const updateEvent = async (req, res) => {
       { new: true, runValidators: true }
     );
     if (!event) return res.status(404).json({ message: "Event not found." });
+    sseEmit("events");
     res.json({ message: "Event updated.", event });
   } catch (err) {
     res.status(500).json({ message: "Server error: " + err.message });
@@ -94,6 +97,7 @@ const deleteEvent = async (req, res) => {
   try {
     const event = await Event.findByIdAndDelete(req.params.id);
     if (!event) return res.status(404).json({ message: "Event not found." });
+    sseEmit("events");
     res.json({ message: "Event deleted." });
   } catch (err) {
     res.status(500).json({ message: "Server error: " + err.message });

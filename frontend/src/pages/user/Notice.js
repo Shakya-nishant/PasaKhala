@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useCallback } from "react";
 import api from "../../utils/api";
+import useSSE from "../../hooks/useSSE";
 import "./css/Notice.css";
 
 /* ─────────────────────────────────────────────────────────────
@@ -54,6 +55,9 @@ const Notice = () => {
   }, []);
 
   useEffect(() => { fetchNotices(); }, [fetchNotices]);
+
+  // Real-time: refetch when admin changes notices
+  useSSE("notices", fetchNotices);
 
   return (
     <div className="nb-page">

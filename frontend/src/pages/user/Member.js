@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useCallback } from "react";
 import api from "../../utils/api";
+import useSSE from "../../hooks/useSSE";
 import "./css/Member.css";
 
 /* ─────────────────────────────────────────────────────────────
@@ -53,6 +54,9 @@ const Member = () => {
   }, []);
 
   useEffect(() => { fetchMembers(); }, [fetchMembers]);
+
+  // Real-time: refetch when admin changes members
+  useSSE("members", fetchMembers);
 
   // Group by row number (stored as "column" in DB)
   const grouped = {};

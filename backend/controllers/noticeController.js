@@ -1,4 +1,5 @@
 const Notice = require("../models/Notice");
+const { sseEmit } = require("../routes/sseRoutes");
 
 /* ─────────────────────────────────────────────────────────────
    PUBLIC
@@ -53,6 +54,7 @@ const createNotice = async (req, res) => {
       postedDate: postedDate ? new Date(postedDate) : new Date(),
       expiresAt:  expiry,
     });
+    sseEmit("notices");
     res.status(201).json({ message: "Notice created.", notice: doc });
   } catch (err) {
     res.status(500).json({ message: "Server error: " + err.message });
@@ -82,6 +84,7 @@ const updateNotice = async (req, res) => {
       { new: true, runValidators: true }
     );
     if (!doc) return res.status(404).json({ message: "Notice not found." });
+    sseEmit("notices");
     res.json({ message: "Notice updated.", notice: doc });
   } catch (err) {
     res.status(500).json({ message: "Server error: " + err.message });
@@ -93,6 +96,7 @@ const deleteNotice = async (req, res) => {
   try {
     const doc = await Notice.findByIdAndDelete(req.params.id);
     if (!doc) return res.status(404).json({ message: "Notice not found." });
+    sseEmit("notices");
     res.json({ message: "Notice deleted." });
   } catch (err) {
     res.status(500).json({ message: "Server error: " + err.message });

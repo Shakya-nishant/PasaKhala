@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useCallback, useRef } from "react";
 import api from "../../utils/api";
+import useSSE from "../../hooks/useSSE";
 import "./css/Album.css";
 
 /* ─────────────────────────────────────────────────────────────
@@ -214,6 +215,9 @@ const AlbumPage = () => {
   }, []);
 
   useEffect(() => { fetchAll(); }, [fetchAll]);
+
+  // Real-time: refetch when admin changes albums or memories
+  useSSE("albums", fetchAll);
 
   const hasContent = albums.length > 0 || memories.length > 0;
 

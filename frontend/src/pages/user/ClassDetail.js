@@ -1,5 +1,6 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import api from "../../utils/api";
+import useSSE from "../../hooks/useSSE";
 import pasakhalaLogo from "../../assets/PasaKhala Logo.jpg";
 import "./css/ClassDetail.css";
 
@@ -252,21 +253,25 @@ const ClassDetail = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError]     = useState("");
 
-  useEffect(() => {
-    const load = async () => {
-      try {
-        const res = await api.getClasses();
-        if (!res.ok) throw new Error("Failed to load classes.");
-        const data = await res.json();
-        setClasses(data);
-      } catch (err) {
-        setError(err.message);
-      } finally {
-        setLoading(false);
-      }
-    };
-    load();
+  const fetchClasses = useCallback(async () => {
+    setLoading(true);
+    setError("");
+    try {
+      const res = await api.getClasses();
+      if (!res.ok) throw new Error("Failed to load classes.");
+      const data = await res.json();
+      setClasses(data);
+    } catch (err) {
+      setError(err.message);
+    } finally {
+      setLoading(false);
+    }
   }, []);
+
+  useEffect(() => { fetchClasses(); }, [fetchClasses]);
+
+  // Real-time: refetch when admin changes classes
+  useSSE("classes", fetchClasses);
 
   return (
     <main className="class-page">

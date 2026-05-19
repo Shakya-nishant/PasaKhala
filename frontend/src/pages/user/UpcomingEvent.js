@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useCallback } from "react";
 import api from "../../utils/api";
+import useSSE from "../../hooks/useSSE";
 import "./css/UpcomingEvent.css";
 
 /* ─────────────────────────────────────────────────────────────
@@ -39,6 +40,9 @@ const UpcomingEvent = () => {
   }, []);
 
   useEffect(() => { fetchEvents(); }, [fetchEvents]);
+
+  // Real-time: refetch when admin changes events
+  useSSE("events", fetchEvents);
 
   return (
     <div className="ue-page">

@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useCallback } from "react";
 import api from "../../utils/api";
+import useSSE from "../../hooks/useSSE";
 import "./css/Contact.css";
 
 /* ─────────────────────────────────────────────────────────────
@@ -147,6 +148,9 @@ const Contact = () => {
   }, []);
 
   useEffect(() => { fetchContact(); }, [fetchContact]);
+
+  // Real-time: refetch when admin changes contact info
+  useSSE("contact", fetchContact);
 
   return (
     <div className="cu-page">

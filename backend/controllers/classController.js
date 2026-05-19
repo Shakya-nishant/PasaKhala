@@ -1,4 +1,5 @@
 const Class = require("../models/Class");
+const { sseEmit } = require("../routes/sseRoutes");
 
 // ── PUBLIC ─────────────────────────────────────────────────────────────────
 
@@ -104,7 +105,7 @@ const adminCreateClass = async (req, res) => {
       totalSeats,
       createdBy: req.admin._id,
     });
-
+    sseEmit("classes");
     res.status(201).json({ message: "Class created successfully.", class: cls });
   } catch (err) {
     res.status(500).json({ message: "Server error: " + err.message });
@@ -121,6 +122,7 @@ const adminUpdateClass = async (req, res) => {
       { new: true, runValidators: true }
     );
     if (!cls) return res.status(404).json({ message: "Class not found." });
+    sseEmit("classes");
     res.json({ message: "Class updated.", class: cls });
   } catch (err) {
     res.status(500).json({ message: "Server error: " + err.message });
@@ -132,6 +134,7 @@ const adminDeleteClass = async (req, res) => {
   try {
     const cls = await Class.findByIdAndDelete(req.params.id);
     if (!cls) return res.status(404).json({ message: "Class not found." });
+    sseEmit("classes");
     res.json({ message: "Class deleted." });
   } catch (err) {
     res.status(500).json({ message: "Server error: " + err.message });

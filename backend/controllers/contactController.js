@@ -1,4 +1,5 @@
 const { ContactItem, ContactSettings } = require("../models/Contact");
+const { sseEmit } = require("../routes/sseRoutes");
 
 /* ── helper: get or create settings ── */
 const getSettings = async () => {
@@ -39,6 +40,7 @@ const createContactItem = async (req, res) => {
       value: value.trim(),
       order: order || 0,
     });
+    sseEmit("contact");
     res.status(201).json({ message: "Contact item created.", item });
   } catch (err) {
     res.status(500).json({ message: "Server error: " + err.message });
@@ -55,6 +57,7 @@ const updateContactItem = async (req, res) => {
       { new: true, runValidators: true }
     );
     if (!item) return res.status(404).json({ message: "Contact item not found." });
+    sseEmit("contact");
     res.json({ message: "Contact item updated.", item });
   } catch (err) {
     res.status(500).json({ message: "Server error: " + err.message });
@@ -66,6 +69,7 @@ const deleteContactItem = async (req, res) => {
   try {
     const item = await ContactItem.findByIdAndDelete(req.params.id);
     if (!item) return res.status(404).json({ message: "Contact item not found." });
+    sseEmit("contact");
     res.json({ message: "Contact item deleted." });
   } catch (err) {
     res.status(500).json({ message: "Server error: " + err.message });
@@ -89,6 +93,7 @@ const updateLocation = async (req, res) => {
       { new: true, upsert: true }
     );
     res.json({ message: "Location updated.", settings });
+    sseEmit("contact");
   } catch (err) {
     res.status(500).json({ message: "Server error: " + err.message });
   }

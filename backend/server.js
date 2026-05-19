@@ -10,6 +10,7 @@ const noticeRoutes  = require("./routes/noticeRoutes");
 const eventRoutes   = require("./routes/eventRoutes");
 const aboutRoutes   = require("./routes/aboutRoutes");
 const albumRoutes   = require("./routes/albumRoutes");
+const { router: sseRoutes } = require("./routes/sseRoutes");
 
 dotenv.config();
 
@@ -50,6 +51,7 @@ app.use("/api/notices", noticeRoutes);
 app.use("/api/events",  eventRoutes);
 app.use("/api/about",   aboutRoutes);
 app.use("/api/albums",  albumRoutes);
+app.use("/api/sse",     sseRoutes);
 
 // Health check
 app.get("/api/health", (_req, res) => {

@@ -1,6 +1,7 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import { Link } from "react-router-dom";
 import api from "../../utils/api";
+import useSSE from "../../hooks/useSSE";
 import logo from "../../assets/PasaKhala Logo.jpg";
 import "./css/Home.css";
 
@@ -38,30 +39,34 @@ const Home = () => {
   const [loadingClasses, setLoadingClasses] = useState(true);
   const [loadingMembers, setLoadingMembers] = useState(true);
 
-  /* fetch all in parallel */
-  useEffect(() => {
+  const fetchEvents = useCallback(() => {
     api.getEvents()
       .then((r) => r.json())
       .then((d) => setEvents(Array.isArray(d) ? d.slice(0, 3) : []))
       .catch(() => setEvents([]))
       .finally(() => setLoadingEvents(false));
+  }, []);
 
+  const fetchNotices = useCallback(() => {
     api.getNotices()
       .then((r) => r.json())
       .then((d) => setNotices(Array.isArray(d) ? d.slice(0, 3) : []))
       .catch(() => setNotices([]))
       .finally(() => setLoadingNotices(false));
+  }, []);
 
+  const fetchClasses = useCallback(() => {
     api.getClasses()
       .then((r) => r.json())
       .then((d) => setClasses(Array.isArray(d) ? d.slice(0, 4) : []))
       .catch(() => setClasses([]))
       .finally(() => setLoadingClasses(false));
+  }, []);
 
+  const fetchMembers = useCallback(() => {
     api.getMembers()
       .then((r) => r.json())
       .then((d) => {
-        // Only show members from row 1 and row 2 (column 1 and 2)
         const row1and2 = Array.isArray(d?.members)
           ? d.members.filter((m) => m.column === 1 || m.column === 2)
           : [];
@@ -70,6 +75,20 @@ const Home = () => {
       .catch(() => setMembers([]))
       .finally(() => setLoadingMembers(false));
   }, []);
+
+  /* fetch all in parallel on mount */
+  useEffect(() => {
+    fetchEvents();
+    fetchNotices();
+    fetchClasses();
+    fetchMembers();
+  }, [fetchEvents, fetchNotices, fetchClasses, fetchMembers]);
+
+  // Real-time: each topic triggers only its own refetch
+  useSSE("events",  fetchEvents);
+  useSSE("notices", fetchNotices);
+  useSSE("classes", fetchClasses);
+  useSSE("members", fetchMembers);
 
   return (
     <main className="home">

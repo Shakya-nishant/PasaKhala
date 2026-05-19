@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useCallback } from "react";
 import api from "../../utils/api";
+import useSSE from "../../hooks/useSSE";
 // Import Quill's output CSS so bold/italic/headings/lists render correctly
 import "react-quill-new/dist/quill.snow.css";
 import "./css/About.css";
@@ -29,6 +30,9 @@ const About = () => {
   }, []);
 
   useEffect(() => { fetchAbout(); }, [fetchAbout]);
+
+  // Real-time: refetch when admin changes about content
+  useSSE("about", fetchAbout);
 
   return (
     <div className="au-page">
