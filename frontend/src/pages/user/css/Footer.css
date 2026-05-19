@@ -163,23 +163,23 @@
   gap: 8px;
 }
 
-/* The secret admin link — styled like a watermark */
+/* The secret admin link — styled visibly but subtly */
 .footer__brand-text {
   font-family: "Playfair Display", serif;
-  font-size: 1.5rem;
+  font-size: 1.8rem;
   font-weight: 800;
-  letter-spacing: 7px;
-  color: rgba(58,32,16,0.5);
+  letter-spacing: 8px;
+  color: rgba(201,146,42,0.55);
   cursor: default;
   user-select: none;
-  transition: color 0.4s, text-shadow 0.4s, letter-spacing 0.4s;
+  transition: color 0.35s, text-shadow 0.35s, letter-spacing 0.35s;
   text-transform: uppercase;
 }
 
 .footer__brand-text:hover {
-  color: rgba(90,56,28,0.7);
-  text-shadow: 0 0 24px rgba(201,146,42,0.12);
-  letter-spacing: 8px;
+  color: rgba(201,146,42,0.85);
+  text-shadow: 0 0 28px rgba(201,146,42,0.3);
+  letter-spacing: 9px;
 }
 
 .footer__copy {
@@ -192,6 +192,6 @@
 @media (max-width: 600px) {
   .footer__inner { padding: 32px 24px 24px; }
   .footer__thankyou-text { font-size: 1.1rem; }
-  .footer__brand-text { font-size: 1.15rem; letter-spacing: 5px; }
+  .footer__brand-text { font-size: 1.4rem; letter-spacing: 6px; }
   .footer__values { gap: 12px; }
 }
