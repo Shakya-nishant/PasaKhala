@@ -35,14 +35,14 @@ const AdminDashboard = ({ section: initialSection }) => {
   const handleLogout = () => { localStorage.clear(); navigate("/"); };
 
   const navItems = [
-    { key: "overview", icon: "🏠", label: "Overview" },
-    { key: "classes",  icon: "📚", label: "Classes"  },
-    { key: "events",   icon: "📅", label: "Events"   },
-    { key: "notices",  icon: "📢", label: "Notices"  },
-    { key: "members",  icon: "👥", label: "Members"  },
-    { key: "about",    icon: "📖", label: "About Us" },
-    { key: "album",    icon: "🖼",  label: "Album"    },
-    { key: "contact",  icon: "📞", label: "Contact"  },
+    { key: "overview", label: "Overview" },
+    { key: "classes",  label: "Classes"  },
+    { key: "events",   label: "Events"   },
+    { key: "notices",  label: "Notices"  },
+    { key: "members",  label: "Members"  },
+    { key: "about",    label: "About Us" },
+    { key: "album",    label: "Album"    },
+    { key: "contact",  label: "Contact"  },
   ];
 
   const activeLabel = navItems.find((n) => n.key === activeSection)?.label;
@@ -70,9 +70,9 @@ const AdminDashboard = ({ section: initialSection }) => {
             <p className="dashboard__slogan">हाम्रो संस्कृति, हाम्रो परिचय</p>
           </div>
           <div className="dashboard__admin-badge">
-            <span className="dashboard__role-pill">👤 {admin?.name}</span>
+            <span className="dashboard__role-pill">{admin?.name}</span>
             <button className="dashboard__logout-btn" onClick={handleLogout}>
-              🚪 Logout
+              Logout
             </button>
           </div>
         </div>
@@ -93,13 +93,13 @@ const AdminDashboard = ({ section: initialSection }) => {
                   className={`dashboard__nav-btn ${activeSection === item.key ? "dashboard__nav-btn--active" : ""}`}
                   onClick={() => { setActiveSection(item.key); setMenuOpen(false); }}
                 >
-                  {item.icon} {item.label}
+                  {item.label}
                 </button>
               </li>
             ))}
             <li className="dashboard__nav-item" style={{ marginLeft: "auto" }}>
               <button className="dashboard__nav-btn" onClick={handleLogout} style={{ color: "#FFAAAA" }}>
-                🚪 Logout
+                Logout
               </button>
             </li>
           </ul>
