@@ -23,18 +23,40 @@
   font-family: "Lato", sans-serif;
 }
 
+/* ── Row label ─────────────────────────────────────────────── */
+.mp__row-label {
+  text-align: center;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--pk-muted);
+  margin-bottom: 24px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.mp__row-label::before,
+.mp__row-label::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(to right, transparent, rgba(201,146,42,0.3), transparent);
+}
+.mp__row-label::before { background: linear-gradient(to right, transparent, rgba(201,146,42,0.3)); }
+.mp__row-label::after  { background: linear-gradient(to left, transparent, rgba(201,146,42,0.3)); }
+
 /* ══════════════════════════════════════════════════════════════
    HERO
 ══════════════════════════════════════════════════════════════ */
 .mp__hero {
   background:
-    radial-gradient(ellipse at 20% 50%, rgba(139,26,26,0.35) 0%, transparent 60%),
-    radial-gradient(ellipse at 80% 30%, rgba(201,146,42,0.18) 0%, transparent 55%),
-    linear-gradient(160deg, var(--pk-dark) 0%, var(--pk-dark2) 50%, #4A1800 100%);
-  padding: 72px 48px 56px;
-  text-align: center;
-  position: relative;
-  overflow: hidden;
+    radial-gradient(ellipse at 15% 50%, rgba(139,26,26,0.4) 0%, transparent 55%),
+    radial-gradient(ellipse at 85% 30%, rgba(201,146,42,0.22) 0%, transparent 50%),
+    radial-gradient(ellipse at 50% 90%, rgba(74,24,0,0.3) 0%, transparent 50%),
+    linear-gradient(160deg, var(--pk-dark) 0%, var(--pk-dark2) 45%, #4A1800 100%);
+  padding: 80px 48px 64px;
+  text-align: center; position: relative; overflow: hidden;
 }
 
 .mp__hero::before {

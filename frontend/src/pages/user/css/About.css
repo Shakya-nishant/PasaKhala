@@ -25,10 +25,11 @@
 /* ── Hero ──────────────────────────────────────────────────── */
 .au-hero {
   background:
-    radial-gradient(ellipse at 20% 50%, rgba(139,26,26,0.35) 0%, transparent 60%),
-    radial-gradient(ellipse at 80% 30%, rgba(201,146,42,0.18) 0%, transparent 55%),
-    linear-gradient(160deg, var(--pk-dark) 0%, var(--pk-dark2) 50%, #4A1800 100%);
-  padding: 72px 48px 56px;
+    radial-gradient(ellipse at 15% 50%, rgba(139,26,26,0.4) 0%, transparent 55%),
+    radial-gradient(ellipse at 85% 30%, rgba(201,146,42,0.22) 0%, transparent 50%),
+    radial-gradient(ellipse at 50% 90%, rgba(74,24,0,0.3) 0%, transparent 50%),
+    linear-gradient(160deg, var(--pk-dark) 0%, var(--pk-dark2) 45%, #4A1800 100%);
+  padding: 80px 48px 64px;
   text-align: center;
   position: relative;
   overflow: hidden;
@@ -99,14 +100,25 @@
 }
 
 .au-section {
-  padding: 40px 0;
+  padding: 44px 0;
   border-bottom: 1px solid rgba(201,146,42,0.15);
-  animation: auFadeIn 0.4s ease both;
+  animation: auFadeIn 0.5s ease both;
+  position: relative;
 }
 .au-section:last-child { border-bottom: none; }
 
+/* Subtle left accent on each section */
+.au-section::before {
+  content: "";
+  position: absolute;
+  left: -32px; top: 44px; bottom: 44px;
+  width: 3px;
+  background: linear-gradient(to bottom, transparent, rgba(201,146,42,0.3), transparent);
+  border-radius: 2px;
+}
+
 @keyframes auFadeIn {
-  from { opacity: 0; transform: translateY(10px); }
+  from { opacity: 0; transform: translateY(14px); }
   to   { opacity: 1; transform: translateY(0); }
 }
 

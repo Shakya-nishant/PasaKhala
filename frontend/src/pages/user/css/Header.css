@@ -1,6 +1,6 @@
 /* ============================================================
    Header.css — PasaKhala Cultural Organization
-   Aesthetic: Warm terracotta + deep crimson, Nepali cultural
+   Rich Nepali cultural aesthetic: warm terracotta + deep crimson
    ============================================================ */
 
 @import url("https://fonts.googleapis.com/css2?family=Tiro+Devanagari+Hindi:ital@0;1&family=Playfair+Display:wght@600;800&family=Lato:wght@400;700&display=swap");
@@ -18,28 +18,55 @@
 
 /* ── Brand Bar ────────────────────────────────────────────── */
 .header {
-  background: linear-gradient(135deg, var(--pk-cream) 0%, #F7E8CC 100%);
+  background: linear-gradient(135deg, #FFF8EF 0%, #F7E8CC 60%, #F0D9A8 100%);
   border-bottom: 4px solid var(--pk-gold);
-  box-shadow: 0 4px 16px rgba(139, 26, 26, 0.12);
+  box-shadow: 0 4px 20px rgba(139,26,26,0.14);
   font-family: "Lato", sans-serif;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Subtle mandala-inspired background pattern */
+.header::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image:
+    radial-gradient(circle at 95% 50%, rgba(201,146,42,0.08) 0%, transparent 50%),
+    radial-gradient(circle at 5% 50%, rgba(139,26,26,0.05) 0%, transparent 40%);
+  pointer-events: none;
 }
 
 .header__brand {
   display: flex;
   align-items: center;
   gap: 20px;
-  padding: 18px 48px 14px;
+  padding: 16px 48px 12px;
   position: relative;
+  z-index: 1;
 }
 
+/* Logo with double-ring cultural frame */
 .header__logo-wrap {
   flex-shrink: 0;
-  width: 80px;
-  height: 80px;
+  width: 84px;
+  height: 84px;
   border-radius: 50%;
   border: 3px solid var(--pk-gold);
   overflow: hidden;
-  box-shadow: 0 0 0 5px rgba(201, 146, 42, 0.2);
+  box-shadow:
+    0 0 0 5px rgba(201,146,42,0.18),
+    0 0 0 8px rgba(201,146,42,0.07),
+    0 4px 16px rgba(139,26,26,0.2);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.header__logo-wrap:hover {
+  transform: scale(1.04);
+  box-shadow:
+    0 0 0 5px rgba(201,146,42,0.28),
+    0 0 0 9px rgba(201,146,42,0.1),
+    0 6px 20px rgba(139,26,26,0.25);
 }
 
 .header__logo {
@@ -51,18 +78,18 @@
 .header__identity {
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  gap: 3px;
 }
 
 .header__orgname {
   font-family: "Tiro Devanagari Hindi", serif;
-  font-size: 2.4rem;
+  font-size: 2.5rem;
   font-weight: 700;
   color: var(--pk-crimson);
   margin: 0;
   line-height: 1;
   letter-spacing: 1px;
-  text-shadow: 1px 1px 0 rgba(201, 146, 42, 0.25);
+  text-shadow: 1px 2px 0 rgba(201,146,42,0.3), 2px 3px 0 rgba(139,26,26,0.1);
 }
 
 .header__slogan {
@@ -74,7 +101,7 @@
   font-style: italic;
 }
 
-/* Decorative element on the right */
+/* Cultural ornament strip — right side */
 .header__deco {
   position: absolute;
   right: 48px;
@@ -84,26 +111,35 @@
   align-items: center;
   gap: 10px;
   color: var(--pk-gold);
-  font-size: 1.2rem;
-  opacity: 0.6;
+  font-size: 1.3rem;
+  opacity: 0.7;
 }
 
 .header__deco-line {
   display: inline-block;
   width: 60px;
   height: 1.5px;
-  background: var(--pk-gold);
+  background: linear-gradient(to right, transparent, var(--pk-gold), transparent);
 }
 
 /* ── Navigation ───────────────────────────────────────────── */
 .navbar {
-  background: linear-gradient(90deg, var(--pk-nav-bg) 0%, #9B1F1F 100%);
+  background: linear-gradient(90deg, #5A0D0D 0%, var(--pk-nav-bg) 30%, #8B1A1A 70%, #7A1515 100%);
   padding: 0 32px;
   display: flex;
   align-items: center;
-  box-shadow: 0 3px 10px rgba(107, 16, 16, 0.4);
+  box-shadow: 0 3px 12px rgba(90,13,13,0.5);
   position: relative;
   z-index: 100;
+}
+
+/* Top gold accent line on navbar */
+.navbar::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, rgba(201,146,42,0.6), rgba(201,146,42,0.9), rgba(201,146,42,0.6), transparent);
 }
 
 .navbar__list {
@@ -121,16 +157,17 @@
 
 .navbar__link {
   display: block;
-  padding: 14px 20px;
-  color: #F7E8CC;
+  padding: 14px 18px;
+  color: rgba(247,232,204,0.9);
   text-decoration: none;
   font-family: "Lato", sans-serif;
-  font-size: 0.88rem;
+  font-size: 0.85rem;
   font-weight: 700;
   letter-spacing: 0.8px;
   text-transform: uppercase;
   transition: color 0.25s, background 0.25s;
   position: relative;
+  white-space: nowrap;
 }
 
 .navbar__link::after {
@@ -141,7 +178,7 @@
   transform: translateX(-50%);
   width: 0;
   height: 3px;
-  background: var(--pk-gold);
+  background: linear-gradient(to right, var(--pk-gold), #E8B84B);
   border-radius: 2px 2px 0 0;
   transition: width 0.3s ease;
 }
@@ -149,7 +186,7 @@
 .navbar__link:hover,
 .navbar__link--active {
   color: var(--pk-gold);
-  background: rgba(255, 255, 255, 0.06);
+  background: rgba(255,255,255,0.07);
 }
 
 .navbar__link:hover::after,
@@ -178,71 +215,31 @@
   transition: transform 0.3s, opacity 0.3s;
 }
 
-.navbar__hamburger.open span:nth-child(1) {
-  transform: translateY(7.5px) rotate(45deg);
-}
-.navbar__hamburger.open span:nth-child(2) {
-  opacity: 0;
-}
-.navbar__hamburger.open span:nth-child(3) {
-  transform: translateY(-7.5px) rotate(-45deg);
-}
+.navbar__hamburger.open span:nth-child(1) { transform: translateY(7.5px) rotate(45deg); }
+.navbar__hamburger.open span:nth-child(2) { opacity: 0; }
+.navbar__hamburger.open span:nth-child(3) { transform: translateY(-7.5px) rotate(-45deg); }
 
 /* ── Responsive ───────────────────────────────────────────── */
 @media (max-width: 900px) {
-  .header__brand {
-    padding: 14px 24px;
-  }
-
-  .header__orgname {
-    font-size: 1.8rem;
-  }
-
-  .header__deco {
-    display: none;
-  }
-
-  .navbar {
-    padding: 0 16px;
-    flex-wrap: wrap;
-  }
-
-  .navbar__hamburger {
-    display: flex;
-  }
-
+  .header__brand { padding: 12px 24px; }
+  .header__orgname { font-size: 1.9rem; }
+  .header__deco { display: none; }
+  .navbar { padding: 0 16px; flex-wrap: wrap; }
+  .navbar__hamburger { display: flex; }
   .navbar__list {
     display: none;
     flex-direction: column;
     width: 100%;
     padding: 8px 0 16px;
+    background: rgba(90,13,13,0.95);
   }
-
-  .navbar__list--open {
-    display: flex;
-  }
-
-  .navbar__link {
-    padding: 12px 16px;
-    font-size: 0.95rem;
-  }
-
-  .navbar__link::after {
-    display: none;
-  }
+  .navbar__list--open { display: flex; }
+  .navbar__link { padding: 12px 16px; font-size: 0.95rem; }
+  .navbar__link::after { display: none; }
 }
 
 @media (max-width: 480px) {
-  .header__logo-wrap {
-    width: 60px;
-    height: 60px;
-  }
-
-  .header__orgname {
-    font-size: 1.5rem;
-  }
-
-  .header__slogan {
-    font-size: 0.85rem;
-  }
+  .header__logo-wrap { width: 64px; height: 64px; }
+  .header__orgname { font-size: 1.6rem; }
+  .header__slogan { font-size: 0.85rem; }
 }

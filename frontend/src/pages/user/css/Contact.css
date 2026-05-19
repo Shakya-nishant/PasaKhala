@@ -1,6 +1,5 @@
 /* ============================================================
    Contact.css — PasaKhala User Contact Page
-   Left: contact items with icons  |  Right: map + View button
    ============================================================ */
 @import url("https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;800&family=Lato:wght@400;700&display=swap");
 
@@ -15,265 +14,149 @@
   --pk-muted:      #7A6050;
 }
 
-.cu-page {
-  background: var(--pk-cream);
-  min-height: 80vh;
-  font-family: "Lato", sans-serif;
-}
+.cu-page { background: var(--pk-cream); min-height: 80vh; font-family: "Lato", sans-serif; }
 
 /* ── Hero ──────────────────────────────────────────────────── */
 .cu-hero {
   background:
-    radial-gradient(ellipse at 20% 50%, rgba(139,26,26,0.35) 0%, transparent 60%),
-    radial-gradient(ellipse at 80% 30%, rgba(201,146,42,0.18) 0%, transparent 55%),
-    linear-gradient(160deg, var(--pk-dark) 0%, var(--pk-dark2) 50%, #4A1800 100%);
-  padding: 72px 48px 56px;
-  text-align: center;
-  position: relative;
-  overflow: hidden;
+    radial-gradient(ellipse at 15% 50%, rgba(139,26,26,0.4) 0%, transparent 55%),
+    radial-gradient(ellipse at 85% 30%, rgba(201,146,42,0.22) 0%, transparent 50%),
+    radial-gradient(ellipse at 50% 90%, rgba(74,24,0,0.3) 0%, transparent 50%),
+    linear-gradient(160deg, var(--pk-dark) 0%, var(--pk-dark2) 45%, #4A1800 100%);
+  padding: 80px 48px 64px;
+  text-align: center; position: relative; overflow: hidden;
 }
-
 .cu-hero::before {
-  content: "";
-  position: absolute; inset: 0;
+  content: ""; position: absolute; inset: 0;
   background-image:
     repeating-linear-gradient( 45deg, rgba(201,146,42,0.04) 0px, rgba(201,146,42,0.04) 1px, transparent 1px, transparent 40px),
     repeating-linear-gradient(-45deg, rgba(201,146,42,0.04) 0px, rgba(201,146,42,0.04) 1px, transparent 1px, transparent 40px);
   pointer-events: none;
 }
-
 .cu-hero__eyebrow {
   display: block; font-size: 0.75rem; letter-spacing: 4px;
-  text-transform: uppercase; color: rgba(201,146,42,0.75);
+  text-transform: uppercase; color: rgba(201,146,42,0.8);
   font-weight: 700; margin-bottom: 12px; position: relative;
 }
-
 .cu-hero__title {
   font-family: "Playfair Display", serif;
-  font-size: clamp(2rem, 5vw, 3.2rem); font-weight: 800;
+  font-size: clamp(2rem, 5vw, 3.4rem); font-weight: 800;
   color: var(--pk-cream); margin: 0 0 16px; position: relative;
 }
-
 .cu-hero__line {
-  width: 60px; height: 3px; background: var(--pk-gold);
+  width: 60px; height: 3px;
+  background: linear-gradient(to right, var(--pk-gold), #E8B84B);
   margin: 0 auto 20px; border-radius: 2px; position: relative;
 }
-
 .cu-hero__sub {
-  font-size: 1rem; color: rgba(253,246,236,0.65);
-  max-width: 520px; margin: 0 auto; line-height: 1.7; position: relative;
+  font-size: 1rem; color: rgba(253,246,236,0.7);
+  max-width: 520px; margin: 0 auto; line-height: 1.75; position: relative;
 }
 
 /* ── States ────────────────────────────────────────────────── */
 .cu-loading {
   display: flex; flex-direction: column; align-items: center;
-  justify-content: center; gap: 16px; padding: 80px 24px;
-  color: var(--pk-crimson);
+  justify-content: center; gap: 16px; padding: 80px 24px; color: var(--pk-crimson);
 }
 .cu-spinner {
   width: 40px; height: 40px;
   border: 3px solid rgba(139,26,26,0.15);
   border-top-color: var(--pk-crimson);
-  border-radius: 50%;
-  animation: cuSpin 0.8s linear infinite;
+  border-radius: 50%; animation: cuSpin 0.8s linear infinite;
 }
 @keyframes cuSpin { to { transform: rotate(360deg); } }
-
-.cu-error {
-  text-align: center; padding: 60px 24px;
-  color: var(--pk-crimson); font-size: 0.95rem;
-}
+.cu-error { text-align: center; padding: 60px 24px; color: var(--pk-crimson); font-size: 0.95rem; }
 
 /* ── Body: two-column layout ───────────────────────────────── */
 .cu-body {
-  display: flex;
-  flex-direction: row;
-  gap: 48px;
-  padding: 56px 64px 72px;
-  max-width: 1200px;
-  margin: 0 auto;
-  align-items: flex-start;
+  display: flex; flex-direction: row; gap: 52px;
+  padding: 60px 64px 80px;
+  max-width: 1200px; margin: 0 auto; align-items: flex-start;
 }
 
 /* ── Left panel ────────────────────────────────────────────── */
-.cu-left {
-  flex: 1;
-  min-width: 0;
-}
+.cu-left { flex: 1; min-width: 0; }
 
-.cu-left__heading,
-.cu-right__heading {
+.cu-left__heading, .cu-right__heading {
   font-family: "Playfair Display", serif;
-  font-size: 1.4rem;
-  font-weight: 800;
-  color: var(--pk-crimson);
-  margin: 0 0 28px;
-  padding-bottom: 12px;
+  font-size: 1.45rem; font-weight: 800;
+  color: var(--pk-crimson); margin: 0 0 28px;
+  padding-bottom: 14px;
   border-bottom: 2px solid rgba(201,146,42,0.25);
 }
+.cu-left__empty { color: var(--pk-muted); font-size: 0.95rem; }
 
-.cu-left__empty {
-  color: var(--pk-muted);
-  font-size: 0.95rem;
-}
-
-/* Contact item list */
-.cu-list {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-}
+.cu-list { display: flex; flex-direction: column; gap: 16px; }
 
 /* Single contact row */
 .cu-row {
-  display: flex;
-  align-items: flex-start;
-  gap: 16px;
+  display: flex; align-items: flex-start; gap: 16px;
   background: #fff;
   border: 1px solid rgba(201,146,42,0.18);
-  border-radius: 10px;
-  padding: 16px 20px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
-  transition: transform 0.2s, box-shadow 0.2s;
+  border-radius: 10px; padding: 16px 20px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.04);
+  transition: transform 0.25s, box-shadow 0.25s, border-color 0.25s;
 }
-
 .cu-row:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(139,26,26,0.08);
+  transform: translateY(-2px) translateX(3px);
+  box-shadow: 0 8px 24px rgba(139,26,26,0.09);
+  border-color: rgba(201,146,42,0.3);
 }
 
-/* Icon circle */
 .cu-row__icon {
-  flex-shrink: 0;
-  width: 44px;
-  height: 44px;
-  border-radius: 50%;
-  background: rgba(139,26,26,0.06);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border: 1.5px solid currentColor;
-  opacity: 0.85;
+  flex-shrink: 0; width: 44px; height: 44px;
+  border-radius: 50%; background: rgba(139,26,26,0.06);
+  display: flex; align-items: center; justify-content: center;
+  border: 1.5px solid currentColor; opacity: 0.85;
 }
+.cu-row__icon svg { width: 20px; height: 20px; }
 
-.cu-row__icon svg {
-  width: 20px;
-  height: 20px;
-}
-
-.cu-row__body {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-  min-width: 0;
-}
-
-.cu-row__tag {
-  font-size: 0.7rem;
-  font-weight: 700;
-  letter-spacing: 1.2px;
-  text-transform: uppercase;
-  color: var(--pk-muted);
-}
-
-.cu-row__value {
-  font-size: 0.97rem;
-  color: var(--pk-text);
-  line-height: 1.5;
-  word-break: break-word;
-}
-
+.cu-row__body { display: flex; flex-direction: column; gap: 4px; min-width: 0; }
+.cu-row__tag { font-size: 0.7rem; font-weight: 700; letter-spacing: 1.2px; text-transform: uppercase; color: var(--pk-muted); }
+.cu-row__value { font-size: 0.97rem; color: var(--pk-text); line-height: 1.5; word-break: break-word; }
 .cu-row__link {
-  font-size: 0.97rem;
-  color: var(--pk-crimson);
-  font-weight: 700;
-  text-decoration: none;
-  word-break: break-all;
-  transition: color 0.2s;
-  display: inline-flex;
-  align-items: center;
-  gap: 4px;
-  flex-wrap: wrap;
+  font-size: 0.97rem; color: var(--pk-crimson); font-weight: 700;
+  text-decoration: none; word-break: break-all; transition: color 0.2s;
+  display: inline-flex; align-items: center; gap: 4px; flex-wrap: wrap;
 }
 .cu-row__link:hover { color: #6B1010; text-decoration: underline; }
-
-/* Gmail badge shown next to email links */
 .cu-row__gmail-badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 3px;
-  font-size: 0.68rem;
-  font-weight: 700;
-  letter-spacing: 0.5px;
-  text-transform: uppercase;
-  background: rgba(234,67,53,0.1);
-  color: #EA4335;
-  border: 1px solid rgba(234,67,53,0.25);
-  border-radius: 10px;
-  padding: 2px 7px;
-  white-space: nowrap;
-  text-decoration: none;
+  display: inline-flex; align-items: center; gap: 3px;
+  font-size: 0.68rem; font-weight: 700; letter-spacing: 0.5px; text-transform: uppercase;
+  background: rgba(234,67,53,0.1); color: #EA4335;
+  border: 1px solid rgba(234,67,53,0.25); border-radius: 10px;
+  padding: 2px 7px; white-space: nowrap; text-decoration: none;
 }
 
 /* ── Right panel ───────────────────────────────────────────── */
-.cu-right {
-  flex: 1.1;
-  min-width: 0;
-}
+.cu-right { flex: 1.1; min-width: 0; }
 
-/* Map wrapper */
-.cu-map-wrap {
-  display: flex;
-  flex-direction: column;
-  gap: 14px;
-}
+.cu-map-wrap { display: flex; flex-direction: column; gap: 14px; }
 
 .cu-map-iframe {
-  width: 100%;
-  height: 380px;
-  border: none;
+  width: 100%; height: 390px; border: none;
   border-radius: 12px;
-  box-shadow: 0 4px 20px rgba(0,0,0,0.1);
-  border: 2px solid rgba(201,146,42,0.2);
+  box-shadow: 0 6px 24px rgba(0,0,0,0.12);
+  border: 2px solid rgba(201,146,42,0.22);
 }
 
-/* "View on Google Maps" button */
 .cu-map-btn {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  align-self: flex-start;
-  padding: 11px 22px;
-  background: var(--pk-crimson);
-  color: var(--pk-cream);
-  border-radius: 4px;
-  font-family: "Lato", sans-serif;
-  font-size: 0.85rem;
-  font-weight: 700;
-  letter-spacing: 0.8px;
-  text-transform: uppercase;
+  display: inline-flex; align-items: center; gap: 8px; align-self: flex-start;
+  padding: 11px 22px; background: var(--pk-crimson); color: var(--pk-cream);
+  border-radius: 4px; font-family: "Lato", sans-serif;
+  font-size: 0.85rem; font-weight: 700; letter-spacing: 0.8px; text-transform: uppercase;
   text-decoration: none;
-  box-shadow: 0 4px 12px rgba(139,26,26,0.3);
+  box-shadow: 0 4px 14px rgba(139,26,26,0.32);
   transition: background 0.2s, transform 0.18s, box-shadow 0.2s;
 }
-
-.cu-map-btn:hover {
-  background: #6B1010;
-  transform: translateY(-2px);
-  box-shadow: 0 6px 18px rgba(139,26,26,0.4);
-}
+.cu-map-btn:hover { background: #6B1010; transform: translateY(-2px); box-shadow: 0 6px 20px rgba(139,26,26,0.42); }
 
 /* ── Responsive ────────────────────────────────────────────── */
 @media (max-width: 900px) {
-  .cu-body {
-    flex-direction: column;
-    padding: 40px 28px 56px;
-    gap: 40px;
-  }
+  .cu-body { flex-direction: column; padding: 40px 28px 60px; gap: 40px; }
   .cu-map-iframe { height: 300px; }
-  .cu-hero { padding: 48px 24px 40px; }
+  .cu-hero { padding: 52px 24px 44px; }
 }
-
 @media (max-width: 560px) {
   .cu-body { padding: 28px 16px 48px; }
   .cu-map-iframe { height: 240px; }

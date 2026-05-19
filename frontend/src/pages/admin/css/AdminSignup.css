@@ -1,6 +1,6 @@
 /* ============================================================
    AdminSignup.css — PasaKhala Admin Signup
-   Matches user theme: cream bg, crimson/gold/terracotta palette
+   Matches user hero background exactly
    ============================================================ */
 @import url("https://fonts.googleapis.com/css2?family=Tiro+Devanagari+Hindi&family=Playfair+Display:wght@700;800&family=Lato:wght@400;700&display=swap");
 
@@ -18,22 +18,17 @@
 .admin-signup {
   min-height: 100vh;
   background:
-    radial-gradient(ellipse at 20% 50%, rgba(139,26,26,0.35) 0%, transparent 60%),
-    radial-gradient(ellipse at 80% 30%, rgba(201,146,42,0.2) 0%, transparent 55%),
-    linear-gradient(160deg, var(--pk-dark) 0%, var(--pk-dark2) 50%, #4A1800 100%);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
+    radial-gradient(ellipse at 15% 50%, rgba(139,26,26,0.4) 0%, transparent 55%),
+    radial-gradient(ellipse at 85% 30%, rgba(201,146,42,0.22) 0%, transparent 50%),
+    radial-gradient(ellipse at 50% 90%, rgba(74,24,0,0.3) 0%, transparent 50%),
+    linear-gradient(160deg, var(--pk-dark) 0%, var(--pk-dark2) 45%, #4A1800 100%);
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
   padding: 48px 24px;
-  font-family: "Lato", sans-serif;
-  position: relative;
+  font-family: "Lato", sans-serif; position: relative;
 }
-
 .admin-signup::before {
-  content: "";
-  position: absolute;
-  inset: 0;
+  content: ""; position: absolute; inset: 0;
   background-image:
     repeating-linear-gradient(45deg, rgba(201,146,42,0.04) 0px, rgba(201,146,42,0.04) 1px, transparent 1px, transparent 40px),
     repeating-linear-gradient(-45deg, rgba(201,146,42,0.04) 0px, rgba(201,146,42,0.04) 1px, transparent 1px, transparent 40px);
@@ -42,235 +37,122 @@
 
 /* ── Brand strip ───────────────────────────────────────────── */
 .admin-signup__brand {
-  position: relative;
-  z-index: 1;
-  text-align: center;
-  margin-bottom: 32px;
+  position: relative; z-index: 1; text-align: center; margin-bottom: 32px;
 }
-
 .admin-signup__brand-title {
   font-family: "Tiro Devanagari Hindi", serif;
-  font-size: 2.6rem;
-  color: var(--pk-cream);
-  margin: 0 0 4px;
-  text-shadow: 0 0 40px rgba(201,146,42,0.4), 2px 3px 0 rgba(0,0,0,0.3);
+  font-size: 2.8rem; color: var(--pk-cream); margin: 0 0 4px;
+  text-shadow: 0 0 50px rgba(201,146,42,0.45), 2px 3px 0 rgba(0,0,0,0.35);
   letter-spacing: 1px;
 }
-
 .admin-signup__brand-sub {
   font-family: "Tiro Devanagari Hindi", serif;
-  font-size: 0.95rem;
-  color: var(--pk-gold);
-  margin: 0;
-  font-style: italic;
-  letter-spacing: 0.5px;
+  font-size: 0.95rem; color: var(--pk-gold); margin: 0;
+  font-style: italic; letter-spacing: 0.5px;
 }
-
 .admin-signup__divider {
-  width: 60px;
-  height: 3px;
-  background: var(--pk-gold);
-  border-radius: 2px;
-  margin: 12px auto 0;
+  display: flex; align-items: center; gap: 10px;
+  margin: 14px auto 0; width: 160px;
+}
+.admin-signup__divider::before,
+.admin-signup__divider::after {
+  content: ""; flex: 1; height: 1px;
+  background: linear-gradient(to right, transparent, rgba(201,146,42,0.5));
+}
+.admin-signup__divider::after {
+  background: linear-gradient(to left, transparent, rgba(201,146,42,0.5));
 }
 
 /* ── Card ──────────────────────────────────────────────────── */
 .admin-signup__card {
-  position: relative;
-  z-index: 1;
-  background: var(--pk-cream);
-  border-radius: 12px;
-  padding: 40px 40px 36px;
-  width: 100%;
-  max-width: 480px;
-  box-shadow: 0 24px 60px rgba(0,0,0,0.5), 0 0 0 1px rgba(201,146,42,0.15);
+  position: relative; z-index: 1;
+  background: var(--pk-cream); border-radius: 14px;
+  padding: 40px 40px 36px; width: 100%; max-width: 480px;
+  box-shadow: 0 28px 70px rgba(0,0,0,0.55), 0 0 0 1px rgba(201,146,42,0.18);
   border-top: 5px solid var(--pk-crimson);
 }
-
 .admin-signup__badge {
-  display: inline-block;
-  background: rgba(139,26,26,0.1);
-  color: var(--pk-crimson);
-  font-size: 0.75rem;
-  font-weight: 700;
-  letter-spacing: 1.5px;
-  text-transform: uppercase;
-  padding: 5px 14px;
-  border-radius: 20px;
-  margin-bottom: 14px;
+  display: inline-block; background: rgba(139,26,26,0.1); color: var(--pk-crimson);
+  font-size: 0.75rem; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase;
+  padding: 5px 14px; border-radius: 20px; margin-bottom: 14px;
   border: 1px solid rgba(139,26,26,0.2);
 }
-
 .admin-signup__title {
   font-family: "Playfair Display", serif;
-  font-size: 1.9rem;
-  font-weight: 800;
-  color: var(--pk-crimson);
-  margin: 0 0 8px;
+  font-size: 1.9rem; font-weight: 800; color: var(--pk-crimson); margin: 0 0 8px;
 }
-
-.admin-signup__sub {
-  font-size: 0.88rem;
-  color: var(--pk-muted);
-  line-height: 1.6;
-  margin: 0 0 24px;
-}
-
-.admin-signup__alert {
-  border-radius: 6px;
-  padding: 10px 14px;
-  font-size: 0.88rem;
-  margin-bottom: 18px;
-}
-
+.admin-signup__sub { font-size: 0.88rem; color: var(--pk-muted); line-height: 1.6; margin: 0 0 24px; }
+.admin-signup__alert { border-radius: 6px; padding: 10px 14px; font-size: 0.88rem; margin-bottom: 18px; }
 .admin-signup__alert--error {
-  background: rgba(139,26,26,0.07);
-  border: 1px solid rgba(139,26,26,0.25);
-  color: var(--pk-crimson);
+  background: rgba(139,26,26,0.07); border: 1px solid rgba(139,26,26,0.25); color: var(--pk-crimson);
 }
-
 .admin-signup__alert--success {
-  background: rgba(45,106,79,0.08);
-  border: 1px solid rgba(45,106,79,0.3);
-  color: #2D6A4F;
+  background: rgba(45,106,79,0.08); border: 1px solid rgba(45,106,79,0.3); color: #2D6A4F;
 }
 
 /* ── Form ──────────────────────────────────────────────────── */
-.admin-signup__form {
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-}
+.admin-signup__form { display: flex; flex-direction: column; gap: 16px; }
 
-.form-group {
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-}
-
+.form-group { display: flex; flex-direction: column; gap: 6px; }
 .form-group label {
-  font-size: 0.78rem;
-  font-weight: 700;
-  color: var(--pk-text);
-  letter-spacing: 0.5px;
-  text-transform: uppercase;
+  font-size: 0.78rem; font-weight: 700; color: var(--pk-text);
+  letter-spacing: 0.5px; text-transform: uppercase;
 }
-
 .form-group input {
-  width: 100%;
-  padding: 11px 14px;
-  border: 1.5px solid rgba(201,146,42,0.3);
-  border-radius: 6px;
-  font-family: "Lato", sans-serif;
-  font-size: 0.95rem;
-  color: var(--pk-text);
-  background: #fff;
-  transition: border-color 0.2s, box-shadow 0.2s;
-  outline: none;
-  box-sizing: border-box;
+  width: 100%; padding: 11px 14px;
+  border: 1.5px solid rgba(201,146,42,0.3); border-radius: 6px;
+  font-family: "Lato", sans-serif; font-size: 0.95rem; color: var(--pk-text);
+  background: #fff; transition: border-color 0.2s, box-shadow 0.2s;
+  outline: none; box-sizing: border-box;
 }
-
 .form-group input:focus {
-  border-color: var(--pk-gold);
-  box-shadow: 0 0 0 3px rgba(201,146,42,0.15);
+  border-color: var(--pk-gold); box-shadow: 0 0 0 3px rgba(201,146,42,0.15);
 }
-
 .form-group input::placeholder { color: #B0A090; }
+.form-group small { font-size: 0.78rem; color: #9A8070; }
 
-.form-group small {
-  font-size: 0.78rem;
-  color: #9A8070;
-}
-
-.input-wrap {
-  position: relative;
-  display: flex;
-  align-items: center;
-}
-
+.input-wrap { position: relative; display: flex; align-items: center; }
 .input-wrap input { padding-right: 68px; }
-
 .toggle-pass {
-  position: absolute;
-  right: 12px;
-  background: none;
-  border: none;
-  color: #9A8070;
-  font-size: 0.75rem;
-  font-weight: 700;
-  cursor: pointer;
-  letter-spacing: 0.5px;
-  text-transform: uppercase;
-  font-family: "Lato", sans-serif;
-  transition: color 0.2s;
+  position: absolute; right: 12px; background: none; border: none;
+  color: #9A8070; font-size: 0.75rem; font-weight: 700; cursor: pointer;
+  letter-spacing: 0.5px; text-transform: uppercase;
+  font-family: "Lato", sans-serif; transition: color 0.2s;
 }
-
 .toggle-pass:hover { color: var(--pk-crimson); }
 
 /* ── Submit ────────────────────────────────────────────────── */
 .admin-signup__submit {
-  margin-top: 6px;
-  padding: 13px;
-  background: var(--pk-crimson);
-  color: var(--pk-cream);
-  border: none;
-  border-radius: 4px;
-  font-family: "Lato", sans-serif;
-  font-size: 0.88rem;
-  font-weight: 700;
-  letter-spacing: 1px;
-  text-transform: uppercase;
-  cursor: pointer;
-  box-shadow: 0 4px 12px rgba(139,26,26,0.3);
-  transition: background 0.25s, transform 0.2s, box-shadow 0.25s;
-  width: 100%;
+  margin-top: 6px; padding: 13px;
+  background: var(--pk-crimson); color: var(--pk-cream);
+  border: none; border-radius: 4px;
+  font-family: "Lato", sans-serif; font-size: 0.88rem; font-weight: 700;
+  letter-spacing: 1px; text-transform: uppercase; cursor: pointer;
+  box-shadow: 0 4px 14px rgba(139,26,26,0.35);
+  transition: background 0.25s, transform 0.2s, box-shadow 0.25s; width: 100%;
 }
-
 .admin-signup__submit:hover:not(:disabled) {
-  background: #6B1010;
-  transform: translateY(-2px);
-  box-shadow: 0 6px 18px rgba(139,26,26,0.4);
+  background: #6B1010; transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(139,26,26,0.45);
 }
-
 .admin-signup__submit:disabled { opacity: 0.6; cursor: not-allowed; }
 
 /* ── Footer links ──────────────────────────────────────────── */
 .admin-signup__footer-links {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  margin-top: 22px;
-  font-size: 0.85rem;
-  color: #9A8070;
+  display: flex; align-items: center; justify-content: center;
+  gap: 8px; margin-top: 22px; font-size: 0.85rem; color: #9A8070;
 }
-
-.admin-signup__link {
-  color: var(--pk-crimson);
-  font-weight: 700;
-  text-decoration: none;
-}
-
+.admin-signup__link { color: var(--pk-crimson); font-weight: 700; text-decoration: none; }
 .admin-signup__link:hover { text-decoration: underline; }
-
 .admin-signup__back {
-  display: block;
-  margin-top: 12px;
-  background: none;
-  border: none;
-  color: #B0A090;
-  font-size: 0.84rem;
-  cursor: pointer;
-  font-family: "Lato", sans-serif;
-  transition: color 0.2s;
-  padding: 0;
-  text-align: center;
-  width: 100%;
+  display: block; margin-top: 12px; background: none; border: none;
+  color: #B0A090; font-size: 0.84rem; cursor: pointer;
+  font-family: "Lato", sans-serif; transition: color 0.2s;
+  padding: 0; text-align: center; width: 100%;
 }
-
 .admin-signup__back:hover { color: var(--pk-crimson); }
 
 @media (max-width: 480px) {
   .admin-signup__card { padding: 28px 20px; }
-  .admin-signup__brand-title { font-size: 2rem; }
+  .admin-signup__brand-title { font-size: 2.2rem; }
 }

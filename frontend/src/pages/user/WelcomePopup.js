@@ -60,7 +60,9 @@ const WelcomePopup = () => {
           traditions, and togetherness.
         </p>
 
-        <div className="wpopup__divider" aria-hidden="true" />
+        <div className="wpopup__divider" aria-hidden="true">
+          <span className="wpopup__divider-sym">॥</span>
+        </div>
 
         <button className="wpopup__btn" onClick={handleClose}>
           Enter &amp; Explore →

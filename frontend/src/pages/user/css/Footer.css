@@ -1,24 +1,49 @@
 /* ============================================================
    Footer.css — PasaKhala Cultural Organization
+   Rich cultural footer with Nepali ornaments
    ============================================================ */
 
 .footer {
-  background: linear-gradient(135deg, #1C1005 0%, #2E1200 100%);
+  background: linear-gradient(160deg, #1C1005 0%, #2E1200 50%, #3A1800 100%);
   color: #F7E8CC;
-  padding-top: 0;
   position: relative;
   font-family: "Lato", sans-serif;
+  overflow: hidden;
+}
+
+/* Subtle background texture */
+.footer::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image:
+    repeating-linear-gradient(45deg, rgba(201,146,42,0.03) 0px, rgba(201,146,42,0.03) 1px, transparent 1px, transparent 40px),
+    repeating-linear-gradient(-45deg, rgba(201,146,42,0.03) 0px, rgba(201,146,42,0.03) 1px, transparent 1px, transparent 40px);
+  pointer-events: none;
 }
 
 /* ── Ornamental top bar ────────────────────────────────────── */
 .footer__topbar {
   display: flex;
   align-items: center;
-  gap: 12px;
-  padding: 0 48px;
-  background: #6B1010;
-  height: 10px;
-  justify-content: center;
+  gap: 0;
+  background: linear-gradient(90deg, #5A0D0D, #8B1A1A, #6B1010, #8B1A1A, #5A0D0D);
+  height: 12px;
+  position: relative;
+  overflow: hidden;
+}
+
+.footer__topbar::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg,
+    transparent 0%,
+    rgba(201,146,42,0.4) 20%,
+    rgba(201,146,42,0.7) 50%,
+    rgba(201,146,42,0.4) 80%,
+    transparent 100%
+  );
 }
 
 .footer__topbar-ornament {
@@ -26,6 +51,8 @@
   font-size: 1rem;
   font-family: "Tiro Devanagari Hindi", serif;
   line-height: 0;
+  position: relative;
+  z-index: 1;
 }
 
 .footer__topbar-line {
@@ -37,44 +64,95 @@
 
 /* ── Inner content ─────────────────────────────────────────── */
 .footer__inner {
-  padding: 36px 48px 28px;
-  max-width: 960px;
+  padding: 44px 48px 32px;
+  max-width: 1000px;
   margin: 0 auto;
   text-align: center;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 20px;
+  gap: 24px;
+  position: relative;
+  z-index: 1;
+}
+
+/* ── Cultural ornament row ─────────────────────────────────── */
+.footer__ornament-row {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  width: 100%;
+  max-width: 500px;
+}
+
+.footer__ornament-line {
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(to right, transparent, rgba(201,146,42,0.4), transparent);
+}
+
+.footer__ornament-symbol {
+  font-family: "Tiro Devanagari Hindi", serif;
+  font-size: 1.4rem;
+  color: rgba(201,146,42,0.6);
+  line-height: 1;
 }
 
 /* ── Thank you section ─────────────────────────────────────── */
 .footer__thankyou {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 10px;
 }
 
 .footer__thankyou-text {
   font-family: "Tiro Devanagari Hindi", serif;
-  font-size: 1.25rem;
+  font-size: 1.35rem;
   color: #C9922A;
   margin: 0;
   letter-spacing: 0.5px;
+  text-shadow: 0 0 20px rgba(201,146,42,0.2);
 }
 
 .footer__thankyou-sub {
   font-size: 0.88rem;
-  color: #C4B49A;
+  color: rgba(196,180,154,0.75);
   margin: 0;
   font-style: italic;
   letter-spacing: 0.3px;
+  line-height: 1.6;
+}
+
+/* ── Cultural values row ───────────────────────────────────── */
+.footer__values {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.footer__value-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.78rem;
+  color: rgba(196,180,154,0.65);
+  letter-spacing: 0.5px;
+}
+
+.footer__value-dot {
+  width: 4px;
+  height: 4px;
+  background: rgba(201,146,42,0.5);
+  border-radius: 50%;
 }
 
 /* ── Divider ────────────────────────────────────────────────── */
 .footer__divider {
-  width: 120px;
+  width: 140px;
   height: 1px;
-  background: linear-gradient(90deg, transparent, #C9922A55, transparent);
+  background: linear-gradient(90deg, transparent, rgba(201,146,42,0.4), transparent);
 }
 
 /* ── Brand row ──────────────────────────────────────────────── */
@@ -82,45 +160,38 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 6px;
+  gap: 8px;
 }
 
 /* The secret admin link — styled like a watermark */
 .footer__brand-text {
   font-family: "Playfair Display", serif;
-  font-size: 1.4rem;
+  font-size: 1.5rem;
   font-weight: 800;
-  letter-spacing: 6px;
-  color: #3A2010;
+  letter-spacing: 7px;
+  color: rgba(58,32,16,0.5);
   cursor: default;
   user-select: none;
-  transition: color 0.4s, text-shadow 0.4s;
+  transition: color 0.4s, text-shadow 0.4s, letter-spacing 0.4s;
   text-transform: uppercase;
 }
 
 .footer__brand-text:hover {
-  color: #5A3820;
-  text-shadow: 0 0 20px rgba(201, 146, 42, 0.15);
+  color: rgba(90,56,28,0.7);
+  text-shadow: 0 0 24px rgba(201,146,42,0.12);
+  letter-spacing: 8px;
 }
 
 .footer__copy {
-  font-size: 0.75rem;
-  color: #6A5A48;
+  font-size: 0.72rem;
+  color: rgba(106,90,72,0.7);
   letter-spacing: 0.5px;
 }
 
 /* ── Responsive ─────────────────────────────────────────────── */
 @media (max-width: 600px) {
-  .footer__inner {
-    padding: 28px 24px 20px;
-  }
-
-  .footer__thankyou-text {
-    font-size: 1.05rem;
-  }
-
-  .footer__brand-text {
-    font-size: 1.1rem;
-    letter-spacing: 4px;
-  }
+  .footer__inner { padding: 32px 24px 24px; }
+  .footer__thankyou-text { font-size: 1.1rem; }
+  .footer__brand-text { font-size: 1.15rem; letter-spacing: 5px; }
+  .footer__values { gap: 12px; }
 }

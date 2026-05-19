@@ -80,8 +80,9 @@ const Home = () => {
       <section className="hero">
         <div className="hero__overlay" aria-hidden="true" />
         <div className="hero__content">
-          <p className="hero__eyebrow">स्वागतम् — Welcome</p>
+          <p className="hero__eyebrow">ज्वजलपा · स्वागतम् · Welcome</p>
           <h2 className="hero__title">पासा खल</h2>
+          <div className="hero__title-line" aria-hidden="true" />
           <div className="hero__logo-wrap">
             <img src={logo} alt="PasaKhala Logo" className="hero__logo" />
           </div>
@@ -92,6 +93,15 @@ const Home = () => {
           <div className="hero__actions">
             <Link to="/upcoming-event" className="btn btn--primary">Upcoming Events</Link>
             <Link to="/about"          className="btn btn--outline">About Us</Link>
+          </div>
+          <div className="hero__deco-symbols" aria-hidden="true">
+            <span className="hero__deco-line" />
+            <span className="hero__deco-sym">❖</span>
+            <span className="hero__deco-line" />
+            <span className="hero__deco-sym">॥</span>
+            <span className="hero__deco-line" />
+            <span className="hero__deco-sym">❖</span>
+            <span className="hero__deco-line" />
           </div>
         </div>
         <div className="hero__scroll-hint" aria-hidden="true"><span>↓</span></div>
