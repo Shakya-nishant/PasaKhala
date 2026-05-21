@@ -1,7 +1,6 @@
 import React, { useEffect, useState, useCallback } from "react";
 import api from "../../utils/api";
 import useSSE from "../../hooks/useSSE";
-import pasakhalaLogo from "../../assets/PasaKhala Logo.jpg";
 import "./css/ClassDetail.css";
 
 /* ── Helpers ────────────────────────────────────────────────── */
@@ -12,14 +11,11 @@ const fmt = (d) =>
 
 const isPast = (d) => new Date(d) < new Date();
 
-/* ── Class Card ─────────────────────────────────────────────── */
-const ClassCard = ({ cls }) => {
+/* ── Class Card — redesigned cultural layout ────────────────── */
+const ClassCard = ({ cls, index }) => {
   const deadlinePast = isPast(cls.formDeadline);
-  const isClosed     = cls.isClosed;                    // admin manually closed
+  const isClosed     = cls.isClosed;
   const canApply     = !deadlinePast && !isClosed;
-
-  // What to show on the closed pill
-  const closedReason = isClosed ? "Class Full" : "Deadline Passed";
 
   const handleApply = () => {
     if (cls.googleFormLink) {
@@ -28,70 +24,69 @@ const ClassCard = ({ cls }) => {
   };
 
   return (
-    <article className="class-card">
-      {/* Left accent strip */}
-      <div className={`class-card__strip ${canApply ? "class-card__strip--open" : "class-card__strip--closed"}`} />
+    <article className="cc" style={{ animationDelay: `${index * 0.08}s` }}>
 
-      {/* Logo */}
-      <div className="class-card__logo-col">
-        <div className="class-card__logo-wrap">
-          <img src={pasakhalaLogo} alt="PasaKhala" className="class-card__logo" />
-        </div>
-      </div>
+      {/* Top accent bar */}
+      <div className={`cc__bar ${canApply ? "cc__bar--open" : "cc__bar--closed"}`} />
 
-      {/* Body */}
-      <div className="class-card__body">
-        <div className="class-card__top">
-          <div className="class-card__title-row">
-            <h2 className="class-card__title">{cls.title}</h2>
-            <span className={`class-card__badge ${canApply ? "class-card__badge--open" : "class-card__badge--closed"}`}>
-              {canApply ? "Open" : isClosed ? "Class Full" : "Closed"}
-            </span>
+      <div className="cc__inner">
+
+        {/* Header row: number badge + title + status badge */}
+        <div className="cc__head">
+          <span className="cc__num">0{index + 1}</span>
+          <div className="cc__title-wrap">
+            <h2 className="cc__title">{cls.title}</h2>
           </div>
-          <p className="class-card__desc">{cls.description}</p>
+          <span className={`cc__status ${canApply ? "cc__status--open" : "cc__status--closed"}`}>
+            {canApply ? "Open" : isClosed ? "Class Full" : "Closed"}
+          </span>
         </div>
 
-        {/* Meta — start date + deadline only, no seat details */}
-        <div className="class-card__meta">
-          <div className="class-card__meta-item">
-            <span className="class-card__meta-icon">📅</span>
+        {/* Divider */}
+        <div className="cc__divider" />
+
+        {/* Description */}
+        <p className="cc__desc">{cls.description}</p>
+
+        {/* Meta pills row */}
+        <div className="cc__meta">
+          <div className="cc__meta-pill">
+            <span className="cc__meta-icon">📅</span>
             <div>
-              <span className="class-card__meta-label">Class Starts</span>
-              <span className="class-card__meta-value">{fmt(cls.startDate)}</span>
+              <span className="cc__meta-label">Starts</span>
+              <span className="cc__meta-val">{fmt(cls.startDate)}</span>
             </div>
           </div>
-          <div className="class-card__meta-item">
-            <span className="class-card__meta-icon">⏳</span>
+          <div className="cc__meta-pill">
+            <span className="cc__meta-icon">⏳</span>
             <div>
-              <span className="class-card__meta-label">Apply By</span>
-              <span className={`class-card__meta-value ${deadlinePast ? "class-card__meta-value--warn" : ""}`}>
+              <span className="cc__meta-label">Apply By</span>
+              <span className={`cc__meta-val ${deadlinePast ? "cc__meta-val--warn" : ""}`}>
                 {fmt(cls.formDeadline)}
-                {deadlinePast && <span className="class-card__meta-tag">Expired</span>}
               </span>
             </div>
           </div>
         </div>
 
         {/* Action */}
-        <div className="class-card__action">
+        <div className="cc__action">
           {canApply ? (
             cls.googleFormLink ? (
-              <button className="class-card__apply-btn" onClick={handleApply}>
-                Apply Now →
+              <button className="cc__apply-btn" onClick={handleApply}>
+                Apply Now
+                <span className="cc__apply-arrow">→</span>
               </button>
             ) : (
-              <div className="class-card__closed-pill">
-                <span className="class-card__closed-icon">📋</span>
-                <span>Application form coming soon</span>
-              </div>
+              <span className="cc__coming-soon">Application form coming soon</span>
             )
           ) : (
-            <div className="class-card__closed-pill class-card__closed-pill--full">
-              <span className="class-card__closed-icon">⛔</span>
-              <span>{closedReason}</span>
+            <div className="cc__full-pill">
+              <span>⛔</span>
+              <span>{isClosed ? "Class Full" : "Deadline Passed"}</span>
             </div>
           )}
         </div>
+
       </div>
     </article>
   );
@@ -106,7 +101,7 @@ const ClassDetail = () => {
   const fetchClasses = useCallback(async () => {
     setLoading(true); setError("");
     try {
-      const res  = await api.getClasses();
+      const res = await api.getClasses();
       if (!res.ok) throw new Error("Failed to load classes.");
       setClasses(await res.json());
     } catch (err) { setError(err.message); }
@@ -114,12 +109,12 @@ const ClassDetail = () => {
   }, []);
 
   useEffect(() => { fetchClasses(); }, [fetchClasses]);
-
-  // Real-time: refetch when admin changes classes
   useSSE("classes", fetchClasses);
 
   return (
     <main className="class-page">
+
+      {/* Hero */}
       <div className="class-hero">
         <span className="class-hero__eyebrow">Learn with us</span>
         <h1 className="class-hero__title">Our Cultural Classes</h1>
@@ -130,6 +125,7 @@ const ClassDetail = () => {
         </p>
       </div>
 
+      {/* Body */}
       <div className="class-body">
         {loading ? (
           <div className="class-loading"><div className="class-spinner" /><p>Loading classes…</p></div>
@@ -142,7 +138,7 @@ const ClassDetail = () => {
           </div>
         ) : (
           <div className="class-list">
-            {classes.map((cls) => <ClassCard key={cls._id} cls={cls} />)}
+            {classes.map((cls, i) => <ClassCard key={cls._id} cls={cls} index={i} />)}
           </div>
         )}
       </div>
