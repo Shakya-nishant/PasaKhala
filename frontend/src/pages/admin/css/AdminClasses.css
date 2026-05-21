@@ -249,3 +249,62 @@
   .class-form-modal { padding: 28px 20px; }
   .apps-drawer__header { flex-direction: column; }
 }
+
+/* ── Google form link cell ─────────────────────────────────── */
+.ac-form-link {
+  color: var(--pk-crimson);
+  font-size: 0.8rem;
+  font-weight: 700;
+  text-decoration: none;
+  white-space: nowrap;
+}
+.ac-form-link:hover { text-decoration: underline; }
+.ac-no-link { color: var(--pk-muted); font-size: 0.82rem; }
+
+/* ── cf-optional / cf-hint ─────────────────────────────────── */
+.cf-optional { font-weight: 400; color: var(--pk-muted); font-size: 0.78rem; }
+.cf-hint     { font-size: 0.72rem; color: var(--pk-muted); margin-top: 3px; display: block; }
+
+/* ── Close-class toggle switch ─────────────────────────────── */
+.ac-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  user-select: none;
+}
+.ac-toggle__input { display: none; }
+
+.ac-toggle__slider {
+  position: relative;
+  width: 40px; height: 22px;
+  background: rgba(58,32,16,0.15);
+  border-radius: 22px;
+  transition: background 0.25s;
+  flex-shrink: 0;
+}
+.ac-toggle__slider::before {
+  content: "";
+  position: absolute;
+  width: 16px; height: 16px;
+  left: 3px; top: 3px;
+  background: #fff;
+  border-radius: 50%;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.2);
+  transition: transform 0.25s;
+}
+.ac-toggle__input:checked + .ac-toggle__slider {
+  background: var(--pk-crimson);
+}
+.ac-toggle__input:checked + .ac-toggle__slider::before {
+  transform: translateX(18px);
+}
+.ac-toggle__input:disabled + .ac-toggle__slider { opacity: 0.5; cursor: not-allowed; }
+
+.ac-toggle__label {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--pk-muted);
+  white-space: nowrap;
+}
+.ac-toggle__input:checked ~ .ac-toggle__label { color: var(--pk-crimson); }

@@ -370,6 +370,11 @@
   color: var(--pk-crimson);
 }
 
+.class-card__closed-pill--full {
+  background: rgba(139,26,26,0.1);
+  border-color: rgba(139,26,26,0.3);
+}
+
 .class-card__closed-icon { font-size: 1rem; }
 
 /* ============================================================

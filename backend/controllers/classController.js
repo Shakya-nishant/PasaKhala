@@ -3,12 +3,11 @@ const { sseEmit } = require("../routes/sseRoutes");
 
 // ── PUBLIC ─────────────────────────────────────────────────────────────────
 
-// GET /api/classes  — only classes whose startDate hasn't passed
+// GET /api/classes  — only classes whose startDate hasn't passed AND not manually closed
 const getPublicClasses = async (req, res) => {
   try {
     const now = new Date();
     const classes = await Class.find({ startDate: { $gt: now } }).lean({ virtuals: true });
-    // Strip application details but expose count and seatsAvailable
     const result = classes.map(({ applications, ...cls }) => ({
       ...cls,
       applicationsCount: applications ? applications.length : 0,
@@ -93,7 +92,7 @@ const adminGetClasses = async (req, res) => {
 // POST /api/admin/classes
 const adminCreateClass = async (req, res) => {
   try {
-    const { title, description, startDate, formDeadline, totalSeats } = req.body;
+    const { title, description, startDate, formDeadline, totalSeats, googleFormLink } = req.body;
     if (!title || !description || !startDate || !formDeadline || !totalSeats)
       return res.status(400).json({ message: "All fields are required." });
 
@@ -103,6 +102,8 @@ const adminCreateClass = async (req, res) => {
       startDate,
       formDeadline,
       totalSeats,
+      googleFormLink: googleFormLink || "",
+      isClosed: false,
       createdBy: req.admin._id,
     });
     sseEmit("classes");
@@ -115,10 +116,14 @@ const adminCreateClass = async (req, res) => {
 // PUT /api/admin/classes/:id
 const adminUpdateClass = async (req, res) => {
   try {
-    const { title, description, startDate, formDeadline, totalSeats } = req.body;
+    const { title, description, startDate, formDeadline, totalSeats, googleFormLink, isClosed } = req.body;
+    const update = { title, description, startDate, formDeadline, totalSeats };
+    if (googleFormLink !== undefined) update.googleFormLink = googleFormLink;
+    if (isClosed       !== undefined) update.isClosed       = isClosed;
+
     const cls = await Class.findByIdAndUpdate(
       req.params.id,
-      { title, description, startDate, formDeadline, totalSeats },
+      update,
       { new: true, runValidators: true }
     );
     if (!cls) return res.status(404).json({ message: "Class not found." });
