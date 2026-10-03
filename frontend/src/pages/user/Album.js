@@ -12,6 +12,12 @@ const Lightbox = ({ images, startIndex, onClose }) => {
   const prev = () => setIdx((i) => (i - 1 + images.length) % images.length);
   const next = () => setIdx((i) => (i + 1) % images.length);
 
+  // Lock body scroll while lightbox is open
+  useEffect(() => {
+    document.body.style.overflow = "hidden";
+    return () => { document.body.style.overflow = ""; };
+  }, []);
+
   useEffect(() => {
     const onKey = (e) => {
       if (e.key === "ArrowLeft")  prev();
@@ -87,6 +93,12 @@ const MasonryGrid = ({ images, onImageClick }) => {
 ───────────────────────────────────────────────────────────── */
 const AlbumModal = ({ album, onClose }) => {
   const [lbIndex, setLbIndex] = useState(null);
+
+  // Lock body scroll while modal is open
+  useEffect(() => {
+    document.body.style.overflow = "hidden";
+    return () => { document.body.style.overflow = ""; };
+  }, []);
 
   return (
     <div className="album-modal-backdrop" onClick={onClose}>

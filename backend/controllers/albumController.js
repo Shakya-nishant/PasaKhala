@@ -62,7 +62,7 @@ const deleteAlbum = async (req, res) => {
   }
 };
 
-const MAX_ALBUM_IMAGES = 10;
+const MAX_ALBUM_IMAGES = 59;
 
 // POST /api/albums/:id/images  — admin adds image(s) to album
 const addImagesToAlbum = async (req, res) => {
@@ -79,22 +79,30 @@ const addImagesToAlbum = async (req, res) => {
         message: `Album is full. Maximum ${MAX_ALBUM_IMAGES} images per album.`,
       });
 
+    // De-duplicate: skip any image whose URL already exists in this album
+    const existingUrls = new Set(album.images.map((img) => img.url));
+    const unique = images.filter((img) => !existingUrls.has(img.url));
+    const duplicates = images.length - unique.length;
+
     // Only accept as many images as there are free slots
-    const toAdd = images.slice(0, slots);
+    const toAdd = unique.slice(0, slots);
     toAdd.forEach((img) => {
       album.images.push({ url: img.url, caption: img.caption || "" });
     });
     await album.save();
 
-    const skipped = images.length - toAdd.length;
+    const skipped = unique.length - toAdd.length; // skipped due to slot limit
     sseEmit("albums");
-    res.json({
-      message: skipped
-        ? `${toAdd.length} image${toAdd.length !== 1 ? "s" : ""} added. ${skipped} skipped — album limit of ${MAX_ALBUM_IMAGES} reached.`
-        : "Images added.",
-      album,
-      skipped,
-    });
+
+    let message = "Images added.";
+    if (duplicates && skipped)
+      message = `${toAdd.length} image${toAdd.length !== 1 ? "s" : ""} added. ${duplicates} duplicate${duplicates !== 1 ? "s" : ""} skipped. ${skipped} skipped — album limit of ${MAX_ALBUM_IMAGES} reached.`;
+    else if (duplicates)
+      message = `${toAdd.length} image${toAdd.length !== 1 ? "s" : ""} added. ${duplicates} duplicate${duplicates !== 1 ? "s" : ""} skipped.`;
+    else if (skipped)
+      message = `${toAdd.length} image${toAdd.length !== 1 ? "s" : ""} added. ${skipped} skipped — album limit of ${MAX_ALBUM_IMAGES} reached.`;
+
+    res.json({ message, album, skipped, duplicates });
   } catch (err) {
     res.status(500).json({ message: "Server error: " + err.message });
   }
@@ -142,15 +150,29 @@ const addMemories = async (req, res) => {
   if (!images || !images.length)
     return res.status(400).json({ message: "At least one image is required." });
   try {
+    // De-duplicate: skip images whose URL already exists in Memories
+    const existing = await Memory.find({ url: { $in: images.map((i) => i.url) } }).select("url");
+    const existingUrls = new Set(existing.map((m) => m.url));
+    const unique = images.filter((img) => !existingUrls.has(img.url));
+    const duplicates = images.length - unique.length;
+
+    if (!unique.length)
+      return res.status(400).json({ message: "All images already exist in Memories." });
+
     const count = await Memory.countDocuments();
-    const docs = images.map((img, i) => ({
+    const docs = unique.map((img, i) => ({
       url: img.url,
       caption: img.caption || "",
       order: count + i,
     }));
     const created = await Memory.insertMany(docs);
     sseEmit("albums");
-    res.status(201).json({ message: "Memories added.", memories: created });
+
+    const message = duplicates
+      ? `${created.length} memory image${created.length !== 1 ? "s" : ""} added. ${duplicates} duplicate${duplicates !== 1 ? "s" : ""} skipped.`
+      : "Memories added.";
+
+    res.status(201).json({ message, memories: created, duplicates });
   } catch (err) {
     res.status(500).json({ message: "Server error: " + err.message });
   }

@@ -242,8 +242,8 @@
    MASONRY GRID — Pinterest-style CSS columns
 ══════════════════════════════════════════════════════════════ */
 .masonry {
-  columns: 4;
-  column-gap: 14px;
+  columns: 5;
+  column-gap: 12px;
   margin-top: 20px;
 }
 

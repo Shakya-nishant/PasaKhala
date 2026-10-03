@@ -69,7 +69,7 @@ const AdminSignup = () => {
     <div className="admin-signup">
       {/* Brand strip — mirrors user hero heading */}
       <div className="admin-signup__brand">
-        <h1 className="admin-signup__brand-title">पासा खल</h1>
+        <h1 className="admin-signup__brand-title">पासा खल:</h1>
         <p className="admin-signup__brand-sub">हाम्रो संस्कृति, हाम्रो परिचय</p>
         <div className="admin-signup__divider" />
       </div>

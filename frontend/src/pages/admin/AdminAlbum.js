@@ -68,7 +68,7 @@ const readFilesAsBase64 = (files) =>
   Promise.all(Array.from(files).map(compressImage));
 
 /* shared constant */
-const MAX_ALBUM_IMAGES = 10;
+const MAX_ALBUM_IMAGES = 59;
 
 /* ─────────────────────────────────────────────────────────────
    ImagePickerZone — drag-and-drop / click to pick images
@@ -230,11 +230,37 @@ const AlbumImageGrid = ({ album, onRemoveImage, onAddImages }) => {
 };
 
 /* ─────────────────────────────────────────────────────────────
-   AlbumCard — collapsible card for one album
+   AlbumPill — compact clickable tile in the horizontal row
 ───────────────────────────────────────────────────────────── */
-const AlbumCard = ({ album, onDelete, onRefresh }) => {
-  const [open, setOpen] = useState(false);
+const AlbumPill = ({ album, isActive, onClick, onDelete }) => {
+  const coverImg = album.images[album.coverIndex] || album.images[0];
+  return (
+    <div
+      className={`album-pill ${isActive ? "album-pill--active" : ""}`}
+      onClick={onClick}
+    >
+      <div className="album-pill__thumb">
+        {coverImg ? (
+          <img src={coverImg.url} alt="cover" />
+        ) : (
+          <span className="album-pill__thumb-empty">🖼</span>
+        )}
+      </div>
+      <p className="album-pill__name">{album.name}</p>
+      <span className="album-pill__count">{album.images.length}</span>
+      <button
+        className="album-pill__del"
+        onClick={(e) => { e.stopPropagation(); onDelete(album); }}
+        title="Delete album"
+      >🗑</button>
+    </div>
+  );
+};
 
+/* ─────────────────────────────────────────────────────────────
+   AlbumDetail — expanded panel shown below the pill row
+───────────────────────────────────────────────────────────── */
+const AlbumDetail = ({ album, onRefresh }) => {
   const handleRemoveImage = async (albumId, imgId) => {
     try {
       const res  = await api.removeImageFromAlbum(albumId, imgId);
@@ -246,42 +272,21 @@ const AlbumCard = ({ album, onDelete, onRefresh }) => {
     }
   };
 
-  const coverImg = album.images[album.coverIndex] || album.images[0];
-
   return (
-    <div className={`album-card ${open ? "album-card--open" : ""}`}>
-      <div className="album-card__header" onClick={() => setOpen((o) => !o)}>
-        <div className="album-card__cover-wrap">
-          {coverImg ? (
-            <img src={coverImg.url} alt="cover" className="album-card__cover" />
-          ) : (
-            <div className="album-card__cover-placeholder">🖼</div>
-          )}
-        </div>
-        <div className="album-card__info">
-          <h3 className="album-card__name">{album.name}</h3>
+    <div className="album-detail">
+      <div className="album-detail__header">
+        <div>
+          <h3 className="album-detail__name">{album.name}</h3>
           {album.description && (
-            <p className="album-card__desc">{album.description}</p>
+            <p className="album-detail__desc">{album.description}</p>
           )}
-          <span className="album-card__count">{album.images.length} image{album.images.length !== 1 ? "s" : ""}</span>
-        </div>
-        <div className="album-card__actions" onClick={(e) => e.stopPropagation()}>
-          <button className="alb-btn alb-btn--delete" onClick={() => onDelete(album)}>
-            🗑 Delete Album
-          </button>
-          <span className="album-card__chevron">{open ? "▲" : "▼"}</span>
         </div>
       </div>
-
-      {open && (
-        <div className="album-card__body">
-          <AlbumImageGrid
-            album={album}
-            onRemoveImage={handleRemoveImage}
-            onAddImages={onRefresh}
-          />
-        </div>
-      )}
+      <AlbumImageGrid
+        album={album}
+        onRemoveImage={handleRemoveImage}
+        onAddImages={onRefresh}
+      />
     </div>
   );
 };
@@ -370,6 +375,12 @@ const CreateAlbumModal = ({ onClose, onCreated }) => {
   const [picked, setPicked] = useState([]);
   const [saving, setSaving] = useState(false);
   const [err,    setErr]    = useState("");
+
+  // Lock body scroll while modal is open
+  useEffect(() => {
+    document.body.style.overflow = "hidden";
+    return () => { document.body.style.overflow = ""; };
+  }, []);
 
   const handlePick = (imgs) => {
     setErr("");
@@ -474,6 +485,31 @@ const CreateAlbumModal = ({ onClose, onCreated }) => {
 };
 
 /* ─────────────────────────────────────────────────────────────
+   DeleteConfirmModal
+───────────────────────────────────────────────────────────── */
+const DeleteConfirmModal = ({ target, onCancel, onConfirm }) => {
+  useEffect(() => {
+    document.body.style.overflow = "hidden";
+    return () => { document.body.style.overflow = ""; };
+  }, []);
+
+  return (
+    <div className="aa-backdrop" onClick={onCancel}>
+      <div className="aa-modal aa-modal--sm" onClick={(e) => e.stopPropagation()}>
+        <h2 className="aa-modal__title">Delete Album?</h2>
+        <p className="aa-modal__body">
+          Delete album <strong>"{target.name}"</strong> and all {target.images.length} image{target.images.length !== 1 ? "s" : ""} inside it? This cannot be undone.
+        </p>
+        <div className="aa-modal__actions">
+          <button className="aa-action aa-action--cancel" onClick={onCancel}>Cancel</button>
+          <button className="aa-action aa-action--delete" onClick={onConfirm}>Yes, Delete</button>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+/* ─────────────────────────────────────────────────────────────
    AdminAlbum — main component
 ───────────────────────────────────────────────────────────── */
 const AdminAlbum = () => {
@@ -484,6 +520,7 @@ const AdminAlbum = () => {
   const [showCreate, setShowCreate] = useState(false);
   const [deleteTarget, setDeleteTarget] = useState(null);
   const [tab, setTab] = useState("albums"); // "albums" | "memories"
+  const [openAlbumId, setOpenAlbumId] = useState(null);
 
   const fetchAll = useCallback(async () => {
     setLoading(true); setError("");
@@ -555,21 +592,39 @@ const AdminAlbum = () => {
       ) : (
         <>
           {tab === "albums" && (
-            <div className="admin-album__albums">
+            <div className="admin-album__albums-tab">
               {albums.length === 0 ? (
                 <div className="admin-album__empty">
                   <span>🗂</span>
                   <p>No albums yet. Click "+ New Album" to create one.</p>
                 </div>
               ) : (
-                albums.map((album) => (
-                  <AlbumCard
-                    key={album._id}
-                    album={album}
-                    onDelete={setDeleteTarget}
-                    onRefresh={fetchAll}
-                  />
-                ))
+                <>
+                  {/* Horizontal pill row */}
+                  <div className="album-pill-row">
+                    {albums.map((album) => (
+                      <AlbumPill
+                        key={album._id}
+                        album={album}
+                        isActive={openAlbumId === album._id}
+                        onClick={() => setOpenAlbumId(openAlbumId === album._id ? null : album._id)}
+                        onDelete={setDeleteTarget}
+                      />
+                    ))}
+                  </div>
+
+                  {/* Detail panel for selected album */}
+                  {openAlbumId && (() => {
+                    const selected = albums.find((a) => a._id === openAlbumId);
+                    return selected ? (
+                      <AlbumDetail
+                        key={selected._id}
+                        album={selected}
+                        onRefresh={fetchAll}
+                      />
+                    ) : null;
+                  })()}
+                </>
               )}
             </div>
           )}
@@ -590,18 +645,11 @@ const AdminAlbum = () => {
 
       {/* Delete album confirm */}
       {deleteTarget && (
-        <div className="aa-backdrop" onClick={() => setDeleteTarget(null)}>
-          <div className="aa-modal aa-modal--sm" onClick={(e) => e.stopPropagation()}>
-            <h2 className="aa-modal__title">Delete Album?</h2>
-            <p className="aa-modal__body">
-              Delete album <strong>"{deleteTarget.name}"</strong> and all {deleteTarget.images.length} image{deleteTarget.images.length !== 1 ? "s" : ""} inside it? This cannot be undone.
-            </p>
-            <div className="aa-modal__actions">
-              <button className="aa-action aa-action--cancel" onClick={() => setDeleteTarget(null)}>Cancel</button>
-              <button className="aa-action aa-action--delete" onClick={handleDeleteAlbum}>Yes, Delete</button>
-            </div>
-          </div>
-        </div>
+        <DeleteConfirmModal
+          target={deleteTarget}
+          onCancel={() => setDeleteTarget(null)}
+          onConfirm={handleDeleteAlbum}
+        />
       )}
     </div>
   );

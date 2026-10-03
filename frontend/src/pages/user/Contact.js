@@ -4,16 +4,18 @@ import useSSE from "../../hooks/useSSE";
 import "./css/Contact.css";
 
 /* ─────────────────────────────────────────────────────────────
-   Icon map — returns an SVG icon for each contact type
+   SVG Icons
 ───────────────────────────────────────────────────────────── */
 const ICONS = {
   phone: (
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"
+      strokeLinecap="round" strokeLinejoin="round">
       <path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81 19.79 19.79 0 01.01 1.18 2 2 0 012 0h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 14.92z"/>
     </svg>
   ),
   email: (
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"
+      strokeLinecap="round" strokeLinejoin="round">
       <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
       <polyline points="22,6 12,13 2,6"/>
     </svg>
@@ -33,28 +35,67 @@ const ICONS = {
       <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/>
     </svg>
   ),
+  youtube: (
+    <svg viewBox="0 0 24 24" fill="currentColor">
+      <path d="M23.498 6.186a3.016 3.016 0 00-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 00.502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 002.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 002.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+    </svg>
+  ),
   address: (
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"
+      strokeLinecap="round" strokeLinejoin="round">
       <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/>
       <circle cx="12" cy="10" r="3"/>
     </svg>
   ),
 };
 
+/* ─────────────────────────────────────────────────────────────
+   Config
+───────────────────────────────────────────────────────────── */
 const TYPE_COLORS = {
   phone:     "#2D6A4F",
   email:     "#8B1A1A",
   whatsapp:  "#25D366",
   facebook:  "#1877F2",
   instagram: "#E1306C",
+  youtube:   "#FF0000",
   address:   "#C4622D",
 };
 
-/* Is the value a URL? */
-const isLink = (val) => /^https?:\/\//i.test(val.trim());
+const TYPE_BG = {
+  phone:     "rgba(45,106,79,0.09)",
+  email:     "rgba(139,26,26,0.08)",
+  whatsapp:  "rgba(37,211,102,0.09)",
+  facebook:  "rgba(24,119,242,0.09)",
+  instagram: "rgba(225,48,108,0.09)",
+  youtube:   "rgba(255,0,0,0.08)",
+  address:   "rgba(196,98,45,0.09)",
+};
 
-/* Build a clickable href for each type.
-   Email → Gmail compose URL (opens in new tab directly in Gmail) */
+const TYPE_LABEL = {
+  phone:     "Phone",
+  email:     "Email",
+  whatsapp:  "WhatsApp",
+  facebook:  "Facebook",
+  instagram: "Instagram",
+  youtube:   "YouTube",
+  address:   "Address",
+};
+
+const SOCIAL_DISPLAY_LABELS = {
+  facebook:  "www.facebook.pasakhala.com",
+  instagram: "www.instagram.pasakhala.com",
+  youtube:   "www.youtube.pasakhala.com",
+  whatsapp:  "www.whatsapp.pasakhala.com",
+};
+
+const SOCIAL_TYPES = new Set(["facebook", "instagram", "youtube", "whatsapp"]);
+
+const getSocialDisplayText = (type) =>
+  SOCIAL_DISPLAY_LABELS[type] || `www.${type}.pasakhala.com`;
+
+const isLink = (val) => /^https?:\/\//i.test((val || "").trim());
+
 const buildHref = (type, value) => {
   if (type === "phone")    return `tel:${value.replace(/\s/g, "")}`;
   if (type === "email")    return `https://mail.google.com/mail/?view=cm&to=${encodeURIComponent(value.trim())}`;
@@ -64,33 +105,53 @@ const buildHref = (type, value) => {
 };
 
 /* ─────────────────────────────────────────────────────────────
-   ContactItem row
+   ContactRow — single contact item
 ───────────────────────────────────────────────────────────── */
 const ContactRow = ({ item }) => {
-  const href  = buildHref(item.type, item.value);
-  const color = TYPE_COLORS[item.type] || "#8B1A1A";
+  const href        = buildHref(item.type, item.value);
+  const color       = TYPE_COLORS[item.type] || "#8B1A1A";
+  const bg          = TYPE_BG[item.type]     || "rgba(139,26,26,0.08)";
+  const typeLabel   = TYPE_LABEL[item.type]  || item.type;
+  const displayText = SOCIAL_TYPES.has(item.type)
+    ? getSocialDisplayText(item.type)
+    : item.value;
 
-  return (
-    <div className="cu-row">
-      <span className="cu-row__icon" style={{ color }}>
+  const content = (
+    <>
+      <span className="cu-row__icon" style={{ background: bg, color }}>
         {ICONS[item.type]}
       </span>
       <div className="cu-row__body">
+        <span className="cu-row__type" style={{ color }}>{typeLabel}</span>
         {item.tag && <span className="cu-row__tag">{item.tag}</span>}
-        {href ? (
-          <a href={href} target="_blank" rel="noopener noreferrer" className="cu-row__link">
-            {item.value}
-          </a>
-        ) : (
-          <span className="cu-row__value">{item.value}</span>
-        )}
+        <span className="cu-row__value">{displayText}</span>
       </div>
+      {href && (
+        <span className="cu-row__arrow" style={{ color }}>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"
+            strokeLinecap="round" strokeLinejoin="round" width="16" height="16">
+            <line x1="5" y1="12" x2="19" y2="12"/>
+            <polyline points="12 5 19 12 12 19"/>
+          </svg>
+        </span>
+      )}
+    </>
+  );
+
+  return href ? (
+    <a href={href} target="_blank" rel="noopener noreferrer"
+      className="cu-row" style={{ "--row-color": color }}>
+      {content}
+    </a>
+  ) : (
+    <div className="cu-row cu-row--static" style={{ "--row-color": color }}>
+      {content}
     </div>
   );
 };
 
 /* ─────────────────────────────────────────────────────────────
-   Map embed (OpenStreetMap — no API key needed)
+   Map embed
 ───────────────────────────────────────────────────────────── */
 const MapEmbed = ({ lat, lng, label }) => {
   const googleUrl = `https://www.google.com/maps?q=${lat},${lng}`;
@@ -98,25 +159,22 @@ const MapEmbed = ({ lat, lng, label }) => {
 
   return (
     <div className="cu-map-wrap">
-      <iframe
-        title={label || "Office Location"}
-        src={osmSrc}
-        className="cu-map-iframe"
-        loading="lazy"
-        allowFullScreen
-      />
-      <a
-        href={googleUrl}
-        target="_blank"
-        rel="noopener noreferrer"
-        className="cu-map-btn"
-      >
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" width="16" height="16">
-          <path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/>
-          <polyline points="15 3 21 3 21 9"/>
-          <line x1="10" y1="14" x2="21" y2="3"/>
+      <h2 className="cu-right__heading">{label || "Our Office"}</h2>
+      <div className="cu-map-frame">
+        <iframe
+          title={label || "Office Location"}
+          src={osmSrc}
+          className="cu-map-iframe"
+          loading="lazy"
+          allowFullScreen
+        />
+      </div>
+      <a href={googleUrl} target="_blank" rel="noopener noreferrer" className="cu-map-btn">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"
+          strokeLinecap="round" strokeLinejoin="round" width="16" height="16">
+          <polygon points="3 11 22 2 13 21 11 13 3 11"/>
         </svg>
-        View on Google Maps
+        Get Directions on Google Maps
       </a>
     </div>
   );
@@ -148,13 +206,12 @@ const Contact = () => {
   }, []);
 
   useEffect(() => { fetchContact(); }, [fetchContact]);
-
-  // Real-time: refetch when admin changes contact info
   useSSE("contact", fetchContact);
 
   return (
     <div className="cu-page">
-      {/* Hero */}
+
+      {/* ── Hero — matches all other pages exactly ── */}
       <div className="cu-hero">
         <span className="cu-hero__eyebrow">Get in Touch</span>
         <h1 className="cu-hero__title">Contact Us</h1>
@@ -164,15 +221,18 @@ const Contact = () => {
         </p>
       </div>
 
+      {/* ── States ── */}
       {loading ? (
         <div className="cu-loading"><div className="cu-spinner" /><p>Loading…</p></div>
       ) : error ? (
         <div className="cu-error">⚠ {error}</div>
       ) : (
         <div className="cu-body">
-          {/* ── Left: contact items ── */}
+
+          {/* ── LEFT: contact list ── */}
           <div className="cu-left">
             <h2 className="cu-left__heading">Reach Us</h2>
+
             {items.length === 0 ? (
               <p className="cu-left__empty">No contact details available yet.</p>
             ) : (
@@ -184,17 +244,15 @@ const Contact = () => {
             )}
           </div>
 
-          {/* ── Right: map ── */}
+          {/* ── RIGHT: map ── */}
           <div className="cu-right">
-            <h2 className="cu-right__heading">
-              {settings.locationLabel || "Our Office"}
-            </h2>
             <MapEmbed
               lat={settings.lat}
               lng={settings.lng}
               label={settings.locationLabel}
             />
           </div>
+
         </div>
       )}
     </div>

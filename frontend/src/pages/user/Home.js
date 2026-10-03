@@ -100,7 +100,7 @@ const Home = () => {
         <div className="hero__overlay" aria-hidden="true" />
         <div className="hero__content">
           <p className="hero__eyebrow">ज्वजलपा · स्वागतम् · Welcome</p>
-          <h2 className="hero__title">पासा खल</h2>
+          <h2 className="hero__title">पासा खल:</h2>
           <div className="hero__title-line" aria-hidden="true" />
           <div className="hero__logo-wrap">
             <img src={logo} alt="PasaKhala Logo" className="hero__logo" />

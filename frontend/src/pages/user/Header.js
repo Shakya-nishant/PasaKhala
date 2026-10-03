@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { NavLink } from "react-router-dom";
 import logo from "../../assets/PasaKhala Logo.jpg";
+import groupImage from "../../assets/group_image.png";
 import "./css/Header.css";
 
 const Header = () => {
@@ -25,13 +26,11 @@ const Header = () => {
           <img src={logo} alt="PasaKhala Logo" className="header__logo" />
         </div>
         <div className="header__identity">
-          <h1 className="header__orgname">पासा खल</h1>
+          <h1 className="header__orgname">पासा खल:</h1>
           <p className="header__slogan">हाम्रो संस्कृति, हाम्रो परिचय</p>
         </div>
         <div className="header__deco" aria-hidden="true">
-          <span>❖</span>
-          <span className="header__deco-line" />
-          <span>❖</span>
+          <img src={groupImage} alt="Group" className="header__group-image" />
         </div>
       </div>
 

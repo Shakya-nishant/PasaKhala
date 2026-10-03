@@ -9,6 +9,7 @@ import AdminEvents  from "./AdminEvents";
 import AdminAbout   from "./AdminAbout";
 import AdminAlbum   from "./AdminAlbum";
 import logo from "../../assets/PasaKhala Logo.jpg";
+import groupImage from "../../assets/group_image.png";
 import "./css/AdminDashboard.css";
 
 const AdminDashboard = ({ section: initialSection }) => {
@@ -66,14 +67,11 @@ const AdminDashboard = ({ section: initialSection }) => {
             <img src={logo} alt="PasaKhala Logo" className="dashboard__logo-img" />
           </div>
           <div className="dashboard__identity">
-            <h1 className="dashboard__orgname">पासा खल</h1>
+            <h1 className="dashboard__orgname">पासा खल:</h1>
             <p className="dashboard__slogan">हाम्रो संस्कृति, हाम्रो परिचय</p>
           </div>
-          <div className="dashboard__admin-badge">
-            <span className="dashboard__role-pill">{admin?.name}</span>
-            <button className="dashboard__logout-btn" onClick={handleLogout}>
-              Logout
-            </button>
+          <div className="dashboard__deco" aria-hidden="true">
+            <img src={groupImage} alt="Group" className="dashboard__group-image" />
           </div>
         </div>
 
@@ -97,8 +95,8 @@ const AdminDashboard = ({ section: initialSection }) => {
                 </button>
               </li>
             ))}
-            <li className="dashboard__nav-item" style={{ marginLeft: "auto" }}>
-              <button className="dashboard__nav-btn" onClick={handleLogout} style={{ color: "#FFAAAA" }}>
+            <li className="dashboard__nav-item">
+              <button className="dashboard__nav-btn dashboard__nav-btn--logout" onClick={handleLogout}>
                 Logout
               </button>
             </li>

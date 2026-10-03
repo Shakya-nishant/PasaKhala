@@ -23,7 +23,6 @@
   box-shadow: 0 4px 20px rgba(139,26,26,0.14);
   font-family: "Lato", sans-serif;
   position: relative;
-  overflow: hidden;
 }
 
 /* Subtle mandala-inspired background pattern */
@@ -104,15 +103,11 @@
 /* Cultural ornament strip — right side */
 .header__deco {
   position: absolute;
-  right: 48px;
-  top: 50%;
-  transform: translateY(-50%);
+  right: -30px;
+  bottom: 0;
+  top: 0;
   display: flex;
-  align-items: center;
-  gap: 10px;
-  color: var(--pk-gold);
-  font-size: 1.3rem;
-  opacity: 0.7;
+  align-items: flex-end;
 }
 
 .header__deco-line {
@@ -120,6 +115,20 @@
   width: 60px;
   height: 1.5px;
   background: linear-gradient(to right, transparent, var(--pk-gold), transparent);
+}
+
+.header__group-image {
+  height: 190%;
+  width: auto;
+  object-fit: cover;
+  object-position: bottom;
+  display: block;
+  opacity: 0.9;
+  transition: opacity 0.3s ease;
+}
+
+.header__group-image:hover {
+  opacity: 1;
 }
 
 /* ── Navigation ───────────────────────────────────────────── */
@@ -149,6 +158,7 @@
   padding: 0;
   gap: 0;
   width: 100%;
+  justify-content: space-evenly;
 }
 
 .navbar__item {

@@ -25,17 +25,18 @@ const TYPES = [
   { value: "whatsapp",  label: "WhatsApp"  },
   { value: "facebook",  label: "Facebook"  },
   { value: "instagram", label: "Instagram" },
+  { value: "youtube",   label: "YouTube"   },
   { value: "address",   label: "Address"   },
 ];
 
 const TYPE_ICONS = {
   phone: "📞", email: "✉️", whatsapp: "💬",
-  facebook: "📘", instagram: "📸", address: "📍",
+  facebook: "📘", instagram: "📸", youtube: "▶️", address: "📍",
 };
 
 const TYPE_COLORS = {
   phone: "#2D6A4F", email: "#8B1A1A", whatsapp: "#25D366",
-  facebook: "#1877F2", instagram: "#E1306C", address: "#C4622D",
+  facebook: "#1877F2", instagram: "#E1306C", youtube: "#FF0000", address: "#C4622D",
 };
 
 const isLink = (val) => /^https?:\/\//i.test((val || "").trim());
@@ -279,6 +280,7 @@ const AdminContact = () => {
                       {form.type === "whatsapp"  && "WhatsApp Number"}
                       {form.type === "facebook"  && "Facebook URL"}
                       {form.type === "instagram" && "Instagram URL"}
+                      {form.type === "youtube"   && "YouTube URL"}
                       {form.type === "address"   && "Address"}
                     </label>
                     {form.type === "address" ? (
@@ -296,6 +298,7 @@ const AdminContact = () => {
                           form.type === "phone"     ? "+977 9800000000" :
                           form.type === "email"     ? "info@pasakhala.org" :
                           form.type === "whatsapp"  ? "+977 9800000000" :
+                          form.type === "youtube"   ? "https://youtube.com/@pasakhala" :
                           "https://..."
                         }
                         value={form.value}
